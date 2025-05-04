@@ -1,6 +1,7 @@
 import React from "react";
 import ThemeSelector from "../components/ThemeSelector";
 import { Outlet } from 'react-router-dom';
+import {Link} from 'react-router-dom';
 
 
 const DefaultLayout = ({ children }) => (
@@ -14,9 +15,9 @@ const DefaultLayout = ({ children }) => (
             <div className="hidden flex-none lg:block">
               <ul className="menu menu-horizontal">
                 {/* Navbar menu content here */}
-                <li><a>Accueil</a></li>
-                <li><a>Produit</a></li>
-                <li><a>A propos</a></li>
+                <li><Link to="/">Accueil</Link></li>
+                <li><Link to="/product">Produit</Link></li>
+                <li><Link to="/about" >A propos</Link></li>
                 <li><a>Télécharger</a></li>
               </ul>
             </div>

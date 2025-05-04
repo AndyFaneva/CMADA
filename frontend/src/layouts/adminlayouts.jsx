@@ -1,6 +1,7 @@
 import React from "react";
 import {Outlet} from "react-router-dom";
 import ThemeSelector from "../components/ThemeSelector";
+import {Link} from "react-router-dom";
 
 export default function AdminLayout() {
     return(
@@ -14,7 +15,7 @@ export default function AdminLayout() {
                  <div className="hidden flex-none lg:block">
                    <ul className="menu menu-horizontal">
                      {/* Navbar menu content here */}
-                     <li><a>Tableau de bord</a></li>
+                     <li ><Link to="/admin">Tableau de bord</Link></li>
                      <li><a>Catalogue</a></li>
                      <li><a>Commande</a></li>
                      <li><a>Stock</a></li>
@@ -64,10 +65,14 @@ export default function AdminLayout() {
                  <div className="navbar bg-base-300 w-full">
                  <div className="mx-2 flex-1 px-2">C'MADA Pro</div> 
                  </div>
-                 <li><a>Accueil</a></li>
+                 <li><a>Tableau de bord</a></li>
+                     <li><a>Catalogue</a></li>
+                     <li><a>Commande</a></li>
+                     <li><a>Stock</a></li>
+                     <li><a>Document</a></li>
+                     <li><a>Remise</a></li>
                      <li><a>Produit</a></li>
-                     <li><a>A propos</a></li>
-                     <li><a>Télécharger</a></li>
+                     <li><a>Utilisateur</a></li>
                      <li>
                  <ThemeSelector></ThemeSelector></li>
                </ul>

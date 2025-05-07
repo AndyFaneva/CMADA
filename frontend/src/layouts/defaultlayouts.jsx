@@ -1,24 +1,31 @@
 import React from "react";
 import ThemeSelector from "../components/ThemeSelector";
 import { Outlet } from 'react-router-dom';
-import {Link} from 'react-router-dom';
+import {NavLink} from 'react-router-dom';
+import Footer from "../components/Footer";
 
 
 const DefaultLayout = ({ children }) => (
   <div>
-   <div className="drawer drawer-mobile">
+      <div className="drawer drawer-mobile z-50">
         <input id="my-drawer-3" type="checkbox" className="drawer-toggle" />
         <div className="drawer-content flex flex-col justify-between">
           {/* Navbar */}
-          <div className="navbar bg-base-300 w-full">
-            <div className="mx-2 flex-1 px-2">C'MADA Pro</div>
+          <div className="navbar bg-base-0 w-full shadow-md">
+            <div className="mx-2 flex-1 px-2">
+              <span className="text-xl font-bold bg-base-800">C'MADA Pro</span></div>
             <div className="hidden flex-none lg:block">
               <ul className="menu menu-horizontal">
                 {/* Navbar menu content here */}
-                <li><Link to="/">Accueil</Link></li>
-                <li><Link to="/product">Produit</Link></li>
-                <li><Link to="/about" >A propos</Link></li>
-                <li><a>Télécharger</a></li>
+                <li><NavLink to="/"  className={({ isActive }) =>
+          isActive ? 'border-b-2 border-blue-500 text-blue-700' : 'text-gray-500'
+        }>Accueil</NavLink></li>
+                <li><NavLink to="/product"  className={({ isActive }) =>
+          isActive ? 'border-b-2 border-blue-500 text-blue-700' : 'text-gray-500'
+        }>Produit</NavLink></li>
+                <li><NavLink to="/about"  className={({ isActive }) =>
+          isActive ? 'border-b-2 border-blue-500 text-blue-700' : 'text-gray-500'
+        }>A propos</NavLink></li>
               </ul>
             </div>
             <div className="flex-none lg:hidden">
@@ -43,7 +50,6 @@ const DefaultLayout = ({ children }) => (
               </label>
             </div>
             <div className="hidden flex-none lg:block text-sm" >
-
                 <ThemeSelector></ThemeSelector>
             </div>
           </div>
@@ -61,18 +67,24 @@ const DefaultLayout = ({ children }) => (
             <div className="navbar bg-base-300 w-full">
             <div className="mx-2 flex-1 px-2">C'MADA Pro</div> 
             </div>
-            <li><a>Accueil</a></li>
-                <li><a>Produit</a></li>
-                <li><a>A propos</a></li>
-                <li><a>Télécharger</a></li>
+            <li><NavLink to="/"  className={({ isActive }) =>
+          isActive ? 'border-b-2 border-blue-500 text-blue-700' : 'text-gray-500'
+        }>Accueil</NavLink></li>
+                <li><NavLink to="/product"  className={({ isActive }) =>
+          isActive ? 'border-b-2 border-blue-500 text-blue-700' : 'text-gray-500'
+        }>Produit</NavLink></li>
+                <li><NavLink to="/about"  className={({ isActive }) =>
+          isActive ? 'border-b-2 border-blue-500 text-blue-700' : 'text-gray-500'
+        }>A propos</NavLink></li>
                 <li>
             <ThemeSelector></ThemeSelector></li>
           </ul>
         </div>
       </div>
-    <main>
+    <main className="bg-base-200">
         <Outlet /> {/* Affiche HomePage, AboutPage, etc. */}
       </main>
+        <Footer></Footer>
   </div>
 );
 

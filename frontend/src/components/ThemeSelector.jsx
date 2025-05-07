@@ -8,6 +8,8 @@ export default function ThemeSelector() {
   };
 
   return (
+    
+    
     <div>
       <div className="flex items-center gap-2">
   <span className="text-sm font-medium">Thème</span>
@@ -27,7 +29,6 @@ export default function ThemeSelector() {
     </div>
   </div>
 </div>
-
     </div>
   );
 }

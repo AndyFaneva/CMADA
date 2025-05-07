@@ -7,6 +7,8 @@ import AdminDashboard from "./pages/admin/admindashboard";
 import AdminLayout from "./layouts/adminlayouts";
 import About from "./pages/public/about";
 import Product from "./pages/public/product";
+import Login from "./components/Login";
+import Signup from "./components/Signup";
 
 function App() {
   return (
@@ -16,6 +18,8 @@ function App() {
               <Route path="/" index element={<Accueil />} />
               <Route path="/about" element={<About />} />
               <Route path="/product" element={<Product/>}/>
+              <Route path="/login" element={<Login/>}/>
+              <Route path="/signup" element={<Signup/>} />
       </Route>
       {/* ADMIN */}
       <Route path="/admin" element={<AdminLayout />}>

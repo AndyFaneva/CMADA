@@ -13,6 +13,7 @@ const DefaultLayout = ({ children }) => (
           {/* Navbar */}
           <div className="navbar bg-base-0 w-full shadow-md">
             <div className="mx-2 flex-1 px-2">
+              <img src="Cmada.png" alt="logo" width={25}/>
               <span className="text-xl font-bold bg-base-800">C'MADA Pro</span></div>
             <div className="hidden flex-none lg:block">
               <ul className="menu menu-horizontal">
@@ -64,8 +65,9 @@ const DefaultLayout = ({ children }) => (
           ></label>
           <ul className="menu w-80 bg-base-200 min-h-full">
             {/* Sidebar content here */}
-            <div className="navbar bg-base-300 w-full">
-            <div className="mx-2 flex-1 px-2">C'MADA Pro</div> 
+            <div className="navbar bg-base-300 w-full"> <div className="mx-2 flex-1 px-2">
+              <img src="Cmada.png" alt="logo" width={25}/>
+              <span className="text-xl font-bold bg-base-800">C'MADA Pro</span></div>
             </div>
             <li><NavLink to="/"  className={({ isActive }) =>
           isActive ? 'border-b-2 border-blue-500 text-blue-700' : 'text-gray-500'

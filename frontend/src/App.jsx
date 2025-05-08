@@ -9,6 +9,9 @@ import About from "./pages/public/about";
 import Product from "./pages/public/product";
 import Login from "./components/Login";
 import Signup from "./components/Signup";
+import AdminUser from "./pages/admin/adminuser";
+import NotFound from "./components/PageNotFound";
+import PrivateRoute from "./routes/PrivateRoute";
 
 function App() {
   return (
@@ -22,8 +25,15 @@ function App() {
               <Route path="/signup" element={<Signup/>} />
       </Route>
       {/* ADMIN */}
-      <Route path="/admin" element={<AdminLayout />}>
-          <Route index element={<AdminDashboard />} />
+      <Route  element={<AdminLayout />}>
+          <Route path="/admindashboard" index element={
+          <PrivateRoute>
+                    <AdminDashboard />
+          </PrivateRoute>} />
+          <Route path="/adminuser" element={
+            <PrivateRoute>
+          <AdminUser/>
+          </PrivateRoute>}/>
       </Route>
       {/* CLIENT
       <Route path="/admin" element={<AdminLayout />}>
@@ -33,6 +43,8 @@ function App() {
       <Route path="/admin" element={<AdminLayout />}>
           <Route index element={<AdminDashboard />} />
       </Route> */}
+          <Route path="/404" element={<NotFound />} />
+        <Route path="*" element={<NotFound />} /> {/* Catch-all */}
       </Routes>
   )
 }

@@ -23,6 +23,7 @@ export default function Signup(){
         setForm({ ...form, [name]: value });
       };
 
+      
   const handleRoleChange = (e) => {
     const selectedRole = e.target.value;
 
@@ -51,32 +52,62 @@ export default function Signup(){
     return Object.keys(newErrors).length === 0;
   };
 
-      const handleSubmit = async (e) => {
-        e.preventDefault();
-        console.log(form);
-        if (!validate()) {
-            setMessage('');
-            return;
-          }
-        try {
-          await axios.post("http://localhost:3000/utilisateur", form);
-          alert("Utilisateur créé avec succès !");
-          setErrors({});
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    console.log(form);
+  
+    if (!validate()) {
+      setMessage('');
+      return;
+    }
+  
+    try {
+      await axios.post("http://localhost:3000/utilisateur", form);
+      alert("Utilisateur créé avec succès !");
+      setErrors({});
+      navigate('/login');
+    } catch (err) {
+      console.error(err);
+  
+      // ✅ Vérifie si le backend a renvoyé une erreur 409 (conflit)
+      if (err.response && err.response.status === 409) {
+        setMessage("Cette adresse mail est déjà utilisé.");
+      } else {
+        setMessage("Erreur lors de l'ajout de l'utilisateur.");
+      }
+  
+      alert("Erreur lors de l'inscription");
+    }
+  };
+  
 
-          navigate('/login');
-        } catch (err) {
-          console.error(err);
-          setMessage('Erreur lors de l\'ajout de l\'utilisateur');
-          alert("Erreur lors de l'inscription");
-        }
-      };
+      // const handleSubmit = async (e) => {
+      //   e.preventDefault();
+      //   console.log(form);
+        
+      //   if (!validate()) {
+      //       setMessage('');
+      //       return;
+      //     }
+      //   try {
+      //     await axios.post("http://localhost:3000/utilisateur", form);
+      //     alert("Utilisateur créé avec succès !");
+      //     setErrors({});
+
+      //     navigate('/login');
+      //   } catch (err) {
+      //     console.error(err);
+      //     setMessage('Erreur lors de l\'ajout de l\'utilisateur');
+      //     alert("Erreur lors de l'inscription");
+      //   }
+      // };
     const navigate = useNavigate();
     return(
         <>
         
-     <div className="flex items-center justify-center min-h-screen bg-base-200">
-    <form onSubmit={handleSubmit}  className="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-2xl sm:w-full">
-      <div className="bg-base-100 px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+     <div className="p-5">
+    <form onSubmit={handleSubmit}  className="max-w-md mx-auto bg-base-100 p-2 rounded-lg shadow-md mx-2">
+      <div className="bg-base-100 px-4 pt-5 pb-2 sm:p- sm:pb-2">
        
 
         <div className="border-b border-gray-900/10 pb-12">
@@ -150,7 +181,7 @@ export default function Signup(){
 
             <div className="col-span-full">
               <label htmlFor="street-address" className="block text-sm/6 font-medium text-base-500">
-                Société
+                Société (optionnel)
               </label>
               <div className="mt-2">
                 <input
@@ -174,7 +205,7 @@ export default function Signup(){
 
             <div className="sm:col-span-3">
               <label htmlFor="last-name" className="block text-sm/6 font-medium text-base-500">
-                Confirmer mot de passe *
+                Confirmation *
               </label>
               <div className="mt-2">
                 <input name="confirmation_mot_de_passe" type="password" onChange={handleChange} placeholder="Mot de passe" className="block w-full rounded-md bg-base-200 px-3 py-1.5 text-base text-base-500 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6" />
@@ -199,10 +230,14 @@ export default function Signup(){
           type="submit"
           className="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-blue-600 text-base font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:ml-3 sm:w-auto sm:text-sm"
         >
-          Enregistrer
+          S'inscrire
         </button>
-        {message && <p>{message}</p>}
+       
       </div>
+      <a className="error mx-auto">
+      {errors.existant && <div className="error">{errors.existant}</div>}
+      {message && <p>{message}</p>}
+      </a>
     </form>
     </div>
     </> 

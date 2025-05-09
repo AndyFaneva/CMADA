@@ -11,7 +11,7 @@ const PrivateRoute = ({ children }) => {
   }, []);
 
   if (isAuthorized === null) {
-    return <div>Chargement...</div>; // ou un spinner
+    return <div>Chargement...</div>;
   }
 
   return isAuthorized ? children : <Navigate to="/404" replace />;

@@ -12,6 +12,7 @@ import Signup from "./components/Signup";
 import AdminUser from "./pages/admin/adminuser";
 import NotFound from "./components/PageNotFound";
 import PrivateRoute from "./routes/PrivateRoute";
+import NonAutoriser from "./components/NonAutoriser";
 
 function App() {
   return (
@@ -43,6 +44,8 @@ function App() {
       <Route path="/admin" element={<AdminLayout />}>
           <Route index element={<AdminDashboard />} />
       </Route> */}
+      
+      <Route path="/nonautoriser" element={<NonAutoriser />}/>
           <Route path="/404" element={<NotFound />} />
         <Route path="*" element={<NotFound />} /> {/* Catch-all */}
       </Routes>

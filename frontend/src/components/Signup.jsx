@@ -2,6 +2,7 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useState } from "react";
+import { API_URL } from "../config";
 
 export default function Signup(){
 
@@ -62,7 +63,7 @@ export default function Signup(){
     }
   
     try {
-      await axios.post("http://localhost:3000/utilisateur", form);
+      await axios.post(`${API_URL}/utilisateur`, form);
       alert("Utilisateur créé avec succès !");
       setErrors({});
       navigate('/login');
@@ -138,7 +139,7 @@ export default function Signup(){
 
             <div className="col-span-full">
               <label htmlFor="email" className="block text-sm/6 font-medium text-base-500">
-                Email *
+                Email *       {errors.existant && <div className="error">{errors.existant}</div>}
               </label>
               <div className="mt-2">
                <input name="email" onChange={handleChange} placeholder="Email" className="block w-full rounded-md bg-base-200 px-3 py-1.5 text-base text-base-500 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6" />
@@ -235,7 +236,6 @@ export default function Signup(){
        
       </div>
       <a className="error mx-auto">
-      {errors.existant && <div className="error">{errors.existant}</div>}
       {message && <p>{message}</p>}
       </a>
     </form>

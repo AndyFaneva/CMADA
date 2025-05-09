@@ -122,7 +122,12 @@ export class UtilisateurService {
       }
     
       // Crée un payload pour le JWT
-      const payload = { sub: utilisateur.id, email: utilisateur.email };
+      const payload = { 
+        userId: utilisateur.id,
+    email: utilisateur.email,
+    role: utilisateur.role,
+    statut: utilisateur.statut,
+       };
       console.log('Payload pour JWT:', payload); // Affiche le payload avant de le signer
     
       // Génère un token JWT avec les informations de l'utilisateur

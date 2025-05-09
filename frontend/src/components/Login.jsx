@@ -2,6 +2,7 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import axios from 'axios';
 import { useState } from "react";
+import { API_URL } from "../config";
 
 export default function Login(){
 
@@ -18,17 +19,17 @@ export default function Login(){
       setLoading(true);
       setError('');
     
-      const start = Date.now(); // ⏱ début du chargement
+      const start = Date.now();
     
       try {
-        const response = await axios.post('http://localhost:3000/utilisateur/login', form);
+        const response = await axios.post(`${API_URL}/utilisateur/login`, form);
         const token = response.data.access_token;
         const utilisateur = response.data.utilisateur;
     
         localStorage.setItem('token', token);
         localStorage.setItem('utilisateur', JSON.stringify(utilisateur));
     
-        const delay = 5000 - (Date.now() - start); // 🕔 calcule le temps restant
+        const delay = 5000 - (Date.now() - start);
     
         setTimeout(() => {
           if (utilisateur.statut === 'actif') {

@@ -7,12 +7,13 @@ import { CommandeModule } from './commande/commande.module';
 import { MailModule } from './mail/mail.module';
 import { ConfigModule } from '@nestjs/config';
 import { JwtModule } from '@nestjs/jwt';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
     JwtModule.register({
       secret: 'zD87s9fhsd8fyshdfsdyf@#jksdf908sdjfhsdjf',
-      signOptions: { expiresIn: '1d' },
+      signOptions: { expiresIn: '1h' },
     }),
     ConfigModule.forRoot({ isGlobal: true }),
     TypeOrmModule.forRoot({
@@ -28,6 +29,7 @@ import { JwtModule } from '@nestjs/jwt';
     UtilisateurModule,
     CommandeModule,
     MailModule,
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService],

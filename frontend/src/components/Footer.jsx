@@ -4,10 +4,9 @@ export default function Footer(){
     return(
         <footer className="footer footer-center bg-base-0 text-base-content rounded p-10">
   <nav className="grid grid-flow-col gap-4">
-    <a className="link link-hover">About us</a>
+    <a className="link link-hover">A propos de C'MADA Pro</a>
     <a className="link link-hover">Contact</a>
-    <a className="link link-hover">Jobs</a>
-    <a className="link link-hover">Press kit</a>
+    <a className="link link-hover">Telecharger moi</a>
   </nav>
   <nav>
     <div className="grid grid-flow-col gap-4">
@@ -47,7 +46,7 @@ export default function Footer(){
     </div>
   </nav>
   <aside>
-    <p>Copyright © {new Date().getFullYear()} - All right reserved by ACME Industries Ltd</p>
+    <p>Copyright © {new Date().getFullYear()} - C'MADA Pro</p>
   </aside>
 </footer>
     );

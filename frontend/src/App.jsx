@@ -13,6 +13,10 @@ import AdminUser from "./pages/admin/adminuser";
 import NotFound from "./components/PageNotFound";
 import PrivateRoute from "./routes/PrivateRoute";
 import NonAutoriser from "./components/NonAutoriser";
+import ClientLayout from "./layouts/clientlayouts";
+import FournisseurLayout from "./layouts/fournisseurlayouts";
+import ClientDashboard from "./pages/client/clientdashboard";
+import FournisseurDashboard from "./pages/fournisseur/fournisseurdashboard";
 
 function App() {
   return (
@@ -27,23 +31,19 @@ function App() {
       </Route>
       {/* ADMIN */}
       <Route  element={<AdminLayout />}>
-          <Route path="/admindashboard" index element={
-          <PrivateRoute>
-                    <AdminDashboard />
-          </PrivateRoute>} />
-          <Route path="/adminuser" element={
-            <PrivateRoute>
-          <AdminUser/>
-          </PrivateRoute>}/>
+          <Route path="/admindashboard" index element={<PrivateRoute roleAttendu="admin"><AdminDashboard /></PrivateRoute>} />
+          <Route path="/adminuser" element={<PrivateRoute roleAttendu="admin"><AdminUser/></PrivateRoute>}/>
       </Route>
-      {/* CLIENT
-      <Route path="/admin" element={<AdminLayout />}>
-          <Route index element={<AdminDashboard />} />
+      {/* CLIENT */}
+      <Route  element={<ClientLayout />}>
+          <Route path="/clientdashboard" index element={<PrivateRoute roleAttendu="client"><ClientDashboard /></PrivateRoute>} />
+          {/* <Route path="/adminuser" element={<PrivateRoute roleAttendu="client"><AdminUser/></PrivateRoute>}/> */}
       </Route>
-      FOURNISSEUR
-      <Route path="/admin" element={<AdminLayout />}>
-          <Route index element={<AdminDashboard />} />
-      </Route> */}
+      {/* FOURNISSEUR */}
+      <Route  element={<FournisseurLayout />}>
+          <Route path="/fournisseurdashboard" index element={<PrivateRoute roleAttendu="fournisseur"><FournisseurDashboard /></PrivateRoute>} />
+          {/* <Route path="/adminuser" element={<PrivateRoute roleAttendu="fournisseur"><AdminUser/></PrivateRoute>}/> */}
+      </Route>
       
       <Route path="/nonautoriser" element={<NonAutoriser />}/>
           <Route path="/404" element={<NotFound />} />

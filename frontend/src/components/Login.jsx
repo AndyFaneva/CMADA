@@ -36,9 +36,9 @@ export default function Login(){
             if (utilisateur.role === 'admin') {
               navigate('/admindashboard');
             } else if (utilisateur.role === 'fournisseur') {
-              navigate('/fournisseur');
+              navigate('/fournisseurdashboard');
             } else if (utilisateur.role === 'client') {
-              navigate('/client');
+              navigate('/clientdashboard');
             } else {
               setError("Rôle non autorisé");
             }

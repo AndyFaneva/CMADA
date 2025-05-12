@@ -13,7 +13,11 @@ export class AuthController {
     }
   
     const { email, role, userId } = req.user;
-    return { email, role, userId };
+    return { 
+      email: req.user.email, 
+      role: req.user.role, 
+      userId : req.user.id
+    };
   }
   
 }

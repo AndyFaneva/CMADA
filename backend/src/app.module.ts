@@ -13,7 +13,7 @@ import { AuthModule } from './auth/auth.module';
   imports: [
     JwtModule.register({
       secret: 'zD87s9fhsd8fyshdfsdyf@#jksdf908sdjfhsdjf',
-      signOptions: { expiresIn: '1h' },
+      signOptions: { expiresIn: '1s' },
     }),
     ConfigModule.forRoot({ isGlobal: true }),
     TypeOrmModule.forRoot({

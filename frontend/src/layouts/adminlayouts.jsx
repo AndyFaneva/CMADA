@@ -5,16 +5,18 @@ import {Link} from "react-router-dom";
 import {NavLink} from 'react-router-dom';
 import {Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react';
 import { BellIcon} from "@heroicons/react/24/outline";
-
+import LogOut from "../components/Logout";
+import Footer from "../components/Footer";
 
 export default function AdminLayout() {
+
     return(
         <div>
         <div className="drawer drawer-mobile">
              <input id="my-drawer-3" type="checkbox" className="drawer-toggle" />
              <div className="drawer-content flex flex-col justify-between">
                {/* Navbar */}
-               <div className="navbar bg-base-300 w-full">
+               <div className="navbar bg-base-100 w-full shadow-md">
                <div className="mx-2 flex-1 px-2">
               <img src="Cmada.png" alt="logo" width={25}/>
               <span className="text-xl font-bold bg-base-800">C'MADA Pro</span></div>
@@ -112,10 +114,10 @@ export default function AdminLayout() {
                 </MenuItem>
                 <MenuItem>
                   <a
-                    href="#"
+                   
                     className="block px-4 py-2 text-sm text-gray-700 data-focus:bg-gray-100 data-focus:outline-hidden"
                   >
-                    Déconnexion
+                    <LogOut />
                   </a>
                 </MenuItem>
               </MenuItems>
@@ -174,10 +176,9 @@ export default function AdminLayout() {
                 </MenuItem>
                 <MenuItem>
                   <a
-                    href="#"
                     className="block px-4 py-2 text-sm text-gray-700 data-focus:bg-gray-100 data-focus:outline-hidden"
                   >
-                    Déconnexion
+                    <LogOut />
                   </a>
                 </MenuItem>
               </MenuItems>
@@ -232,6 +233,7 @@ export default function AdminLayout() {
          <main>
              <Outlet /> {/* Affiche HomePage, AboutPage, etc. */}
            </main>
+           <Footer />
        </div>
     );
 }

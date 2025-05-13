@@ -17,6 +17,7 @@ import ClientLayout from "./layouts/clientlayouts";
 import FournisseurLayout from "./layouts/fournisseurlayouts";
 import ClientDashboard from "./pages/client/clientdashboard";
 import FournisseurDashboard from "./pages/fournisseur/fournisseurdashboard";
+import AdminProduct from "./pages/admin/adminproduct";
 
 function App() {
   return (
@@ -33,6 +34,7 @@ function App() {
       <Route  element={<AdminLayout />}>
           <Route path="/admindashboard" index element={<PrivateRoute roleAttendu="admin"><AdminDashboard /></PrivateRoute>} />
           <Route path="/adminuser" element={<PrivateRoute roleAttendu="admin"><AdminUser/></PrivateRoute>}/>
+          <Route path="/adminproduct" element={<PrivateRoute roleAttendu="admin"><AdminProduct/></PrivateRoute>}/>
       </Route>
       {/* CLIENT */}
       <Route  element={<ClientLayout />}>

@@ -1,4 +1,4 @@
-import { ConflictException, Injectable, UnauthorizedException } from '@nestjs/common';
+import { ConflictException, Injectable, NotFoundException, UnauthorizedException } from '@nestjs/common';
 import { Utilisateur } from './utilisateur.entity';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -6,6 +6,8 @@ import { CreateUtilisateurDto } from './dto/create-utilisateur.dto';
 import * as bcrypt from 'bcryptjs';
 import { MailService } from 'src/mail/mail.service';
 import { JwtService } from '@nestjs/jwt';
+import { UpdateUtilisateurDto } from './dto/update-utilisateur.dto';
+
 
 @Injectable()
 export class UtilisateurService {
@@ -79,10 +81,26 @@ export class UtilisateurService {
   }
   
 
-    async update(id:number, data: Partial<Utilisateur>): Promise<Utilisateur | null>{
-        await this.repo.update(id,data);
-        return this.findOne(id);
+  async update(id: number, updateUtilisateurDto: UpdateUtilisateurDto): Promise<Utilisateur> {
+    try {
+      const utilisateur = await this.repo.findOne({where:{id}});
+      if (!utilisateur) {
+        throw new Error('Utilisateur introuvable');
+      }
+  
+      // Mettre à jour les informations de l'utilisateur
+      Object.assign(utilisateur, updateUtilisateurDto);
+      
+      await this.repo.save(utilisateur);
+      return utilisateur;  // Retourner l'utilisateur mis à jour
+    } catch (error) {
+      console.error('Erreur dans le service de mise à jour de l\'utilisateur :', error);
+      throw new Error('Erreur lors de la mise à jour dans le service');
     }
+  }
+  
+  
+  
 
     delete(id:number): Promise<any>{
         return this.repo.delete(id);
@@ -140,6 +158,18 @@ export class UtilisateurService {
         utilisateur, // Tu peux retourner les informations de l'utilisateur ici si besoin
       };
     }
+
+    async updateStatut(id: number, statut: string): Promise<any> {
+      const user = await this.repo.findOneBy({ id });
+    
+      if (!user) {
+        throw new NotFoundException('Utilisateur non trouvé');
+      }
+    
+      user.statut = statut;
+      return this.repo.save(user);
+    }
+    
     
 
 }

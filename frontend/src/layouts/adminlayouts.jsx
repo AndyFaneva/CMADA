@@ -12,7 +12,7 @@ export default function AdminLayout() {
 
     return(
         <div>
-        <div className="drawer drawer-mobile">
+        <div className="drawer drawer-mobile z-20">
              <input id="my-drawer-3" type="checkbox" className="drawer-toggle" />
              <div className="drawer-content flex flex-col justify-between">
                {/* Navbar */}
@@ -40,7 +40,7 @@ export default function AdminLayout() {
         <li><NavLink to="/"  className={({ isActive }) =>
           isActive ? 'border-b-2 border-blue-500 text-blue-700' : 'text-gray-500'
         }>Remise</NavLink></li>
-        <li><NavLink to="/"  className={({ isActive }) =>
+        <li><NavLink to="/adminproduct"  className={({ isActive }) =>
           isActive ? 'border-b-2 border-blue-500 text-blue-700' : 'text-gray-500'
         }>Produit</NavLink></li>
         <li><NavLink to="/adminuser"  className={({ isActive }) =>
@@ -204,22 +204,22 @@ export default function AdminLayout() {
                  <li><NavLink to="/admindashboard"  className={({ isActive }) =>
           isActive ? 'border-b-2 border-blue-500 text-blue-700' : 'text-gray-500'
         }>Tableau de bord</NavLink></li>
-        <li><NavLink to="/"  className={({ isActive }) =>
+        <li><NavLink to="/#"  className={({ isActive }) =>
           isActive ? 'border-b-2 border-blue-500 text-blue-700' : 'text-gray-500'
         }>Catalogue</NavLink></li>
-        <li><NavLink to="/"  className={({ isActive }) =>
+        <li><NavLink to="/#"  className={({ isActive }) =>
           isActive ? 'border-b-2 border-blue-500 text-blue-700' : 'text-gray-500'
         }>Commande</NavLink></li>
-        <li><NavLink to="/"  className={({ isActive }) =>
+        <li><NavLink to="/#"  className={({ isActive }) =>
           isActive ? 'border-b-2 border-blue-500 text-blue-700' : 'text-gray-500'
         }>Stock</NavLink></li>
-        <li><NavLink to="/"  className={({ isActive }) =>
+        <li><NavLink to="/#"  className={({ isActive }) =>
           isActive ? 'border-b-2 border-blue-500 text-blue-700' : 'text-gray-500'
         }>Document</NavLink></li>
-        <li><NavLink to="/"  className={({ isActive }) =>
+        <li><NavLink to="/#"  className={({ isActive }) =>
           isActive ? 'border-b-2 border-blue-500 text-blue-700' : 'text-gray-500'
         }>Remise</NavLink></li>
-        <li><NavLink to="/"  className={({ isActive }) =>
+        <li><NavLink to="/#"  className={({ isActive }) =>
           isActive ? 'border-b-2 border-blue-500 text-blue-700' : 'text-gray-500'
         }>Produit</NavLink></li>
         <li><NavLink to="/adminuser"  className={({ isActive }) =>

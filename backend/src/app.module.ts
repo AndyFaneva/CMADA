@@ -8,6 +8,8 @@ import { MailModule } from './mail/mail.module';
 import { ConfigModule } from '@nestjs/config';
 import { JwtModule } from '@nestjs/jwt';
 import { AuthModule } from './auth/auth.module';
+import { ProduitModule } from './produit/produit.module';
+import { CategorieModule } from './categorieid/categorieid.module';
 
 @Module({
   imports: [
@@ -30,6 +32,8 @@ import { AuthModule } from './auth/auth.module';
     CommandeModule,
     MailModule,
     AuthModule,
+    ProduitModule,
+    CategorieModule
   ],
   controllers: [AppController],
   providers: [AppService],

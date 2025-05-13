@@ -1,125 +1,314 @@
-import React from "react";
-const user = [
-  {
-    id: 1,nom: 'Jane',email: 'jane@gmail.com',role: 'administrateur',societe: "",statut: 'actif',
-  },
-    {
-      id: 2,nom: 'Faneva',email: 'fanevahasintsoa@gmail.com',role: 'client',societe: "",statut: 'inactif',
-    },
-    // More user...
-  ]
-  const getBadgeClass = (role) => {
-    switch (role) {
-      case "Disponible":
-        return "badge badge-accent";
-      case "Précommande":
-        return "badge badge-primary";
-      case "Arrivages":
-        return "badge badge-warning";
-      case "Déstockage":
-        return "badge badge-error";
-      case "Echantillons":
-        return "badge badge-success";
-      default:
-        return "badge badge-neutral";
+import React, { useEffect, useState } from "react";
+import { API_URL } from "../../config";
+import UtilisateurModal from "../../components/UtilisateurModal";
+import ModifierUtilisateurModal from "../../components/ModifierUtilisateurModal";
+
+export default function AdminUser() {
+  const [utilisateurs, setUtilisateurs] = useState([]);
+  const [showModal, setShowModal] = useState(false);
+  const [message, setMessage] = useState('');
+  const [searchTerm, setSearchTerm] = useState('');
+  const [loading, setLoading] = useState(true); // État de chargement
+  const [showModalVisible, setShowModalVisible] = useState(false);
+  const [selectedUser, setSelectedUser] = useState(null);
+
+
+  useEffect(() => {
+    fetchUtilisateurs();
+  }, []);
+
+  const handleEditClick = (user) => {
+    setSelectedUser(user);
+    setShowModalVisible(true);
+  };
+
+  const handleUserUpdated = () => {
+    fetchUtilisateurs();
+    setShowModalVisible(false);
+  };
+
+
+
+
+//CHANGER STATUT
+const toggleUserStatus = async (userId, newStatus) => {
+  try {
+    const response = await fetch(`${API_URL}/utilisateur/${userId}/statut`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ statut: newStatus }),
+    });
+
+    if (!response.ok) {
+      throw new Error("Échec de la mise à jour du statut");
+    }
+
+    // Met à jour localement la liste
+    setUtilisateurs((prev) =>
+      prev.map((user) =>
+        user.id === userId ? { ...user, statut: newStatus } : user
+      )
+    );
+    setMessage("Statut mis à jour avec succès");
+    setTimeout(() => setMessage(''), 5000);
+  } catch (error) {
+    console.error("Erreur:", error);
+    setMessage(error.message);
+    setTimeout(() => setMessage(''), 5000);
+  }
+};
+
+  //SUPRIMER DES UTILISATEURS
+  const handleDeleteUser = async (userId) => {
+    const confirmDelete = window.confirm("Êtes-vous sûr de vouloir supprimer cet utilisateur ?");
+    if (!confirmDelete) return;
+  
+    try {
+      const response = await fetch(`${API_URL}/utilisateur/${userId}`, {
+        method: "DELETE",
+      });
+  
+      if (!response.ok) {
+        throw new Error("Erreur lors de la suppression de l'utilisateur");
+      }
+  
+      // Mettre à jour la liste sans l'utilisateur supprimé
+      setUtilisateurs((prev) => prev.filter((user) => user.id !== userId));
+      setMessage("Utilisateur supprimé avec succès");
+  
+      // Message temporaire
+      setTimeout(() => setMessage(''), 5000);
+    } catch (error) {
+      console.error("Erreur:", error);
+      setMessage(error.message);
+      setTimeout(() => setMessage(''), 5000);
     }
   };
-export default function AdminUser(){
-  return (
-    <div className="h-full overflow-auto bg-base-200">
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 bg-base-200"> 
-    <div className=" bg-base-200 h-auto place-items-left">
-  <div className="bg-base-200 h-20 place-items-left m-5 p-5">
-    <h1 className="font-bold">Gestion des Utilisateurs</h1>
-    <p>Créez et gérez les utilisateurs de votre plateforme</p>
-  </div>
-  </div>
-  <div className=" max-w-7xl mx-auto">
-  {/* tableau */}
-  <div className=" ">
-  <div>
-    <div className="max-h-[200px]border-gray-200 mb-5">
-    <div className="px-6 py-4 border-b border-gray-200 flex flex-col md:flex-row md:items-center md:justify-between bg-base-100">
-            <div className="flex flex-col">
-                <h1>Liste des Utilisateurs</h1>
-                <p>Administration des comptes utilisateurs</p>
-            </div>
-            <div className="flex flex-col sm:flex-row gap-3">
-                <div className="relative">
-                    <div className="absolute inset-y-0 pl-3 flex items-center pointer-events-non">
-                        <i className="fas fa-search text-base-500">
+  
+  // Fonction pour récupérer les utilisateurs
+  const fetchUtilisateurs = async () => {
+    try {
+      const response = await fetch(`${API_URL}/utilisateur`);
+      if (!response.ok) {
+        throw new Error('Erreur lors du chargement des utilisateurs');
+      }
+      const data = await response.json();
+      setUtilisateurs(data);
+    } catch (error) {
+      console.error('Erreur:', error);
+      setMessage(error.message);
+    } finally {
+      setLoading(false); // Fin du chargement
+    }
+  };
 
-                        </i>
-                    </div>
-                    <input type="text" id="user-search"
-                    placeholder="Rechercher un utilisateur ..."
-                     className="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md leading-5 bg-base-100 placeholder-gray-500 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm" />
+  useEffect(() => {
+    fetchUtilisateurs();
+  }, []);
+
+  // Fonction pour ajouter un nouvel utilisateur
+  const handleUserAdded = (newUser) => {
+    setUtilisateurs((prevUtilisateurs) => [...prevUtilisateurs, newUser]);
+    setMessage("Utilisateur ajouté avec succès");
+    setTimeout(() => setMessage(''), 5000);
+  };
+
+  // Obtenir la classe du badge en fonction du rôle
+  const getBadgeClass = (role) => {
+    switch (role) {
+      case "admin":
+        return "px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-purple-100 text-purple-800";
+      case "fournisseur":
+        return "px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800";
+      case "client":
+        return "px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-blue-100 text-blue-800";
+      default:
+        return "badge badge-ghost";
+    }
+  };
+
+  // Obtenir la classe du badge en fonction du statut
+  const getBadgeStatut = (statut) => {
+    switch (statut) {
+      case "actif":
+        return "px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800";
+      case "inactif":
+        return "px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-gray-100 text-gray-800";
+      default:
+        return "badge badge-warning";
+    }
+  };
+
+  // Filtrer les utilisateurs en fonction du terme de recherche
+  const filteredUtilisateurs = utilisateurs.filter(user => {
+    // Vérifier si 'user' est défini
+    if (!user) return false;
+  
+    // Si 'user' est défini, on vérifie les propriétés nom, email et role
+    return (
+      user.nom?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      user.email?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      user.role?.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+  });
+
+  return (
+    <div className="h-full p-6 bg-base-200">
+      <div className="max-w-7xl mx-auto">
+        {/* En-tête */}
+        <div className="mb-6">
+          <h1 className="text-2xl font-bold">Gestion des Utilisateurs</h1>
+          <p className="text-gray-600">Créez et gérez les utilisateurs de votre plateforme</p>
+        </div>
+
+        {/* Carte principale */}
+        <div className="card bg-base-100 shadow-lg">
+          <div className="card-body p-6">
+            {/* Barre de recherche et bouton */}
+            <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-6">
+              <div>
+                <h2 className="text-xl font-semibold">Liste des Utilisateurs</h2>
+                <p className="text-sm text-gray-500">Administration des comptes utilisateurs</p>
+              </div>
+              <div className="flex flex-col sm:flex-row gap-3 w-full md:w-auto">
+                <div className="relative w-full md:w-64">
+                  <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                    <svg className="h-5 w-5 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
+                      <path fillRule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clipRule="evenodd" />
+                    </svg>
+                  </div>
+                  <input
+                    type="text"
+                    placeholder="Rechercher un utilisateur..."
+                    className="input input-bordered w-full pl-10"
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                  />
                 </div>
-                <button className="btn btn-primary">+ Nouvel utilisateur</button>
+                <button 
+                  className="btn btn-primary"
+                  onClick={() => setShowModal(true)}
+                >
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-1" viewBox="0 0 20 20" fill="currentColor">
+                    <path fillRule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clipRule="evenodd" />
+                  </svg>
+                  Nouvel utilisateur
+                </button>
+              </div>
             </div>
-        </div>
-        <div className="overflow-x-auto">
-  <table className="min-w-full divide-y divide-gray-200">
-    
-    {/* head */}
-    <thead className="bg-base-300">
-      <tr>
-        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">NOM</th>
-        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">EMAIL</th>
-        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">ROLE</th>
-        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">SOCIETE</th>
-        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">STATUT</th>
-        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">ACTIONS</th>
-      </tr>
-    </thead>
-    <tbody className="bg-base-100" id="user-list">
-      {/* row 1 */}
-      {user.map((item, index)=>(
-      <tr key={item.id || index}>
-        <th>{item.nom}</th>
-        <td>{item.email}</td>
-        <td>
-          <span className={getBadgeClass(item.role)}> 
-          {item.role} </span></td>
-        <td>{item.societe}</td>
-        <th>{item.statut}</th>
-        <th>
-          <div className="flex space-x-2">
-          <button className="bg-blue-600 hover:bg-blue-700 text-white py-1 px-2 rounded text-xs ">Modifier</button>
-          <button className="border border-gray-300 hover:bg-gray-50 text-gray-700 py-1 px-2 rounded text-xs">Activer</button>
+
+            {/* Tableau */}
+            <div className="overflow-x-auto">
+              <table className="table w-full">
+                <thead>
+                  <tr>
+                    <th className="bg-base-300">NOM</th>
+                    <th className="bg-base-300">EMAIL</th>
+                    <th className="bg-base-300">ROLE</th>
+                    <th className="bg-base-300">SOCIETE</th>
+                    <th className="bg-base-300">STATUT</th>
+                    <th className="bg-base-300">ACTIONS</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {loading ? (
+                    <tr>
+                      <td colSpan="6" className="text-center py-8">
+                        Chargement des utilisateurs...
+                      </td>
+                    </tr>
+                  ) : filteredUtilisateurs.length > 0 ? (
+                    filteredUtilisateurs.map((user) => (
+                      <tr key={user.id} className="hover:bg-base-200">
+                        <td>
+                          <div className="font-bold">{user.nom}</div>
+                          <div className="text-sm text-gray-500">{user.prenom}</div>
+                        </td>
+                        <td>{user.email}</td>
+                        <td>
+                          <span className={getBadgeClass(user.role)}>
+                            {user.role}
+                          </span>
+                        </td>
+                        <td>{user.societe || '-'}</td>
+                        <td>
+                          <span className={getBadgeStatut(user.statut)}>
+                            {user.statut}
+                          </span>
+                        </td>
+                        <td>
+                          <div className="flex space-x-2">
+                            <button className="text-blue-600 hover:text-blue-900 mr-3"
+                            onClick={() => handleEditClick(user)}
+                            >Modifier</button>
+                            {user.statut === "actif" ? (
+                             <button
+                             className="text-yellow-600 hover:text-yellow-900 mr-3"
+                             onClick={() => toggleUserStatus(user.id, "inactif")}
+                             >
+                              Désactiver
+                            </button>
+                            ) : (
+                             <button
+                             className="text-yellow-600 hover:text-yellow-900 mr-3"
+                               onClick={() => toggleUserStatus(user.id, "actif")}
+                             >
+                            Activer
+                               </button>
+                            )}
+
+                              {/* Ajouter le bouton Supprimer pour les utilisateurs de type client ou fournisseur */}
+                            {(user.role === 'client' || user.role === 'fournisseur') && (
+                             <button className="text-red-600 hover:text-red-900"
+                             onClick={() => handleDeleteUser(user.id)}>
+                             Supprimer
+                            </button>
+                        )}
+                          </div>
+                        </td>
+                      </tr>
+                    ))
+                  ) : (
+                    <tr>
+                      <td colSpan="6" className="text-center py-8">
+                        Aucun utilisateur trouvé
+                      </td>
+                    </tr>
+                  )}
+                </tbody>
+              </table>
+            </div>
+
+            {/* Pagination */}
+            <div className="flex flex-col sm:flex-row justify-between items-center mt-6 pt-4 border-t border-base-300">
+              <div className="text-sm mb-4 sm:mb-0">
+                Affichage de <span className="font-bold">1</span> à <span className="font-bold">{filteredUtilisateurs.length}</span> sur <span className="font-bold">{utilisateurs.length}</span> utilisateurs
+              </div>
+              <div className="btn-group">
+                <button className="btn btn-sm">«</button>
+                <button className="btn btn-sm btn-active">1</button>
+                <button className="btn btn-sm">»</button>
+              </div>
+            </div>
           </div>
-        </th>
-      </tr>
-      ))}
-    </tbody>
-  </table>
-  </div>
-  <div className="x-6 py-4 border-t border-gray-200 bg-base-100">
-    <div className="flex justify-between items-center bg-base-100">
-        <div>
-            <p>Affichage de
-            <span>1</span>
-            à
-            <span>2</span>
-            sur
-            <span>2</span>
-            utilisateurs
-            </p>
         </div>
-        <div>
-            <nav className="relative z-0 inline-flex rounded-md shadow-sm -space-x-px">
-                <button className="relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50"></button>
-                <span>Page 1</span>
-                <button className="relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50"></button>
-            </nav>
-        </div>
+      </div>
+
+      {/* Modal */}
+      <ModifierUtilisateurModal
+        show={showModalVisible}
+        onClose={() => setShowModalVisible(false)}
+        utilisateur={selectedUser}
+        onUserUpdated={handleUserUpdated}
+      />
+      <UtilisateurModal
+        show={showModal}
+        onClose={() => setShowModal(false)}
+        message={message}
+        onUserAdded={handleUserAdded}
+      />
     </div>
-  </div>
-  </div>
-</div>
-  </div>
-</div>
-</div>
-</div>
-  )
+  );
 }

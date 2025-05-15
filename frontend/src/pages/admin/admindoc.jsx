@@ -3,7 +3,7 @@ import { API_URL } from "../../config";
 import UtilisateurModal from "../../components/UtilisateurModal";
 import ModifierUtilisateurModal from "../../components/ModifierUtilisateurModal";
 
-export default function AdminUser() {
+export default function AdminDoc() {
   const [utilisateurs, setUtilisateurs] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [message, setMessage] = useState('');
@@ -160,8 +160,8 @@ const toggleUserStatus = async (userId, newStatus) => {
       <div className="max-w-7xl mx-auto">
         {/* En-tête */}
         <div className="mb-6">
-          <h1 className="text-2xl font-bold">Gestion des Utilisateurs</h1>
-          <p className="text-gray-600">Créez et gérez les utilisateurs de votre plateforme</p>
+          <h1 className="text-2xl font-bold">Documents</h1>
+          <p className="text-gray-600">Gérez vos bons de commande et factures</p>
         </div>
 
         {/* Carte principale */}
@@ -170,10 +170,20 @@ const toggleUserStatus = async (userId, newStatus) => {
             {/* Barre de recherche et bouton */}
             <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-6">
               <div>
-                <h2 className="text-xl font-semibold">Liste des Utilisateurs</h2>
-                <p className="text-sm text-gray-500">Administration des comptes utilisateurs</p>
+                <h2 className="text-xl font-semibold">Historique des documents</h2>
+                <p className="text-sm text-gray-500">Bons de commandes et factures générés</p>
               </div>
               <div className="flex flex-col sm:flex-row gap-3 w-full md:w-auto">
+                <button 
+                  className="btn btn-neutral"
+                  onClick={() => setShowModal(true)}
+                >
+             <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-1" viewBox="0 0 20 20" fill="currentColor">
+  <path fillRule="evenodd" d="M3 4a1 1 0 011-1h6a1 1 0 110 2H5v10h10v-5a1 1 0 112 0v6a1 1 0 01-1 1H4a1 1 0 01-1-1V4zm11-1a1 1 0 011 1v3.586l-1.293-1.293a1 1 0 00-1.414 1.414L15.414 10l-3.121 3.121a1 1 0 001.414 1.414L16 11.414V15a1 1 0 102 0V4a1 1 0 00-1-1h-3z" clipRule="evenodd" />
+</svg>
+
+                  Exporter
+                </button>
                 <div className="relative w-full md:w-64">
                   <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                     <svg className="h-5 w-5 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
@@ -188,15 +198,6 @@ const toggleUserStatus = async (userId, newStatus) => {
                     onChange={(e) => setSearchTerm(e.target.value)}
                   />
                 </div>
-                <button 
-                  className="btn btn-primary"
-                  onClick={() => setShowModal(true)}
-                >
-                  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-1" viewBox="0 0 20 20" fill="currentColor">
-                    <path fillRule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clipRule="evenodd" />
-                  </svg>
-                  Nouvel utilisateur
-                </button>
               </div>
             </div>
 
@@ -205,10 +206,11 @@ const toggleUserStatus = async (userId, newStatus) => {
               <table className="table w-full">
                 <thead>
                   <tr>
-                    <th className="bg-base-300">NOM</th>
-                    <th className="bg-base-300">EMAIL</th>
-                    <th className="bg-base-300">ROLE</th>
-                    <th className="bg-base-300">SOCIETE</th>
+                    <th className="bg-base-300">TYPE</th>
+                    <th className="bg-base-300">N° DOCUMENT</th>
+                    <th className="bg-base-300">DATE</th>
+                    <th className="bg-base-300">CLIENT</th>
+                    <th className="bg-base-300">MONTANT</th>
                     <th className="bg-base-300">STATUT</th>
                     <th className="bg-base-300">ACTIONS</th>
                   </tr>
@@ -217,7 +219,7 @@ const toggleUserStatus = async (userId, newStatus) => {
                   {loading ? (
                     <tr>
                       <td colSpan="6" className="text-center py-8">
-                        Chargement des utilisateurs...
+                        Chargement des documents...
                       </td>
                     </tr>
                   ) : filteredUtilisateurs.length > 0 ? (

@@ -1,13 +1,26 @@
 import React, { useEffect, useState } from "react";
 import { API_URL } from "../../config";
 import {Edit3} from "lucide-react";
+import ModifierProduitModal from "../../components/ModifierProduitModal";
 
 export default function AdminProduct() {
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const [produits, setProduits] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [loading, setLoading] = useState(true);
   const [message, setMessage] = useState('');
+  const [selectedProduct, setSelectedProduct] = useState(null);
   
+
+  const handleEditClick = (product) => {
+    setSelectedProduct(product);
+    setIsModalOpen(true);
+  };
+
+  const handleProductUpdated = () => {
+    fetchProduits();
+    setIsModalOpenVisible(false);
+  };
   // Fonction pour récupérer les produist
   const fetchProduits = async () => {
     try {
@@ -170,7 +183,8 @@ export default function AdminProduct() {
                         <td>
                           <div className="flex space-x-2">
                             {/* BOUTTON MODIFIER */}
-                          <button className="text-blue-600 hover:text-blue-900 mr-3">
+                          <button className="text-blue-600 hover:text-blue-900 mr-3"
+                          onClick={()=>setIsModalOpen(true)}>
                           <Edit3 className="h-5 w-5"/>
                           </button>
 
@@ -222,6 +236,13 @@ export default function AdminProduct() {
           </div>
         </div>
       </div>
+
+      <ModifierProduitModal
+        show={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        produit={selectedProduct}
+        onProductUpdated={handleProductUpdated}
+      />
     </div>
   );
 }

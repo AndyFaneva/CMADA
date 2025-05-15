@@ -7,8 +7,11 @@ import {Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react';
 import { BellIcon} from "@heroicons/react/24/outline";
 import LogOut from "../components/Logout";
 import Footer from "../components/Footer";
+import ProfilUtilisateur from "../components/ProfilUtilisateur";
+import { useNavigate } from "react-router-dom";
 
 export default function AdminLayout() {
+  const navigate = useNavigate();
 
     return(
         <div>
@@ -25,19 +28,19 @@ export default function AdminLayout() {
                  <li><NavLink to="/admindashboard"  className={({ isActive }) =>
           isActive ? 'border-b-2 border-blue-500 text-blue-700' : 'text-gray-500'
         }>Tableau de bord</NavLink></li>
-        <li><NavLink to="/"  className={({ isActive }) =>
+        <li><NavLink to="/admincatalogueproduit"  className={({ isActive }) =>
           isActive ? 'border-b-2 border-blue-500 text-blue-700' : 'text-gray-500'
         }>Catalogue</NavLink></li>
-        <li><NavLink to="/"  className={({ isActive }) =>
+        <li><NavLink to="/admincommande"  className={({ isActive }) =>
           isActive ? 'border-b-2 border-blue-500 text-blue-700' : 'text-gray-500'
         }>Commande</NavLink></li>
-        <li><NavLink to="/"  className={({ isActive }) =>
+        <li><NavLink to="/adminstock"  className={({ isActive }) =>
           isActive ? 'border-b-2 border-blue-500 text-blue-700' : 'text-gray-500'
         }>Stock</NavLink></li>
-        <li><NavLink to="/"  className={({ isActive }) =>
+        <li><NavLink to="/admindoc"  className={({ isActive }) =>
           isActive ? 'border-b-2 border-blue-500 text-blue-700' : 'text-gray-500'
         }>Document</NavLink></li>
-        <li><NavLink to="/"  className={({ isActive }) =>
+        <li><NavLink to="/adminremise"  className={({ isActive }) =>
           isActive ? 'border-b-2 border-blue-500 text-blue-700' : 'text-gray-500'
         }>Remise</NavLink></li>
         <li><NavLink to="/adminproduct"  className={({ isActive }) =>
@@ -94,12 +97,12 @@ export default function AdminLayout() {
               </div>
               <MenuItems
                 transition
-                className="fixed right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black/5 transition focus:outline-hidden data-closed:scale-95 data-closed:transform data-closed:opacity-0 data-enter:duration-100 data-enter:ease-out data-leave:duration-75 data-leave:ease-in"
+                className="fixed right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-base-100 py-1 shadow-lg ring-1 ring-black/5 transition focus:outline-hidden data-closed:scale-95 data-closed:transform data-closed:opacity-0 data-enter:duration-100 data-enter:ease-out data-leave:duration-75 data-leave:ease-in"
               >
                 <MenuItem>
                   <a
-                    href="#"
-                    className="block px-4 py-2 text-sm text-gray-700 data-focus:bg-gray-100 data-focus:outline-hidden"
+                   navigate="/profiluser"
+                    className="block px-4 py-2 text-sm text-gray-700 data-focus:bg-base-100 data-focus:outline-hidden"
                   >
                     Votre profile
                   </a>
@@ -156,27 +159,26 @@ export default function AdminLayout() {
               </div>
               <MenuItems
                 transition
-                className="fixed right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black/5 transition focus:outline-hidden data-closed:scale-95 data-closed:transform data-closed:opacity-0 data-enter:duration-100 data-enter:ease-out data-leave:duration-75 data-leave:ease-in"
+                className="fixed right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-base-100 py-1 shadow-lg ring-1 ring-black/5 transition focus:outline-hidden data-closed:scale-95 data-closed:transform data-closed:opacity-0 data-enter:duration-100 data-enter:ease-out data-leave:duration-75 data-leave:ease-in"
               >
                 <MenuItem>
-                  <a
-                    href="#"
-                    className="block px-4 py-2 text-sm text-gray-700 data-focus:bg-gray-100 data-focus:outline-hidden"
+                  <Link to="/profilutilisateur"
+                    className="block px-4 py-2 text-sm text-base-700 data-focus:bg-base-100 data-focus:outline-hidden"
                   >
                     Votre profile
-                  </a>
+                  </Link>
                 </MenuItem>
                 <MenuItem>
-                  <a
-                    href="#"
-                    className="block px-4 py-2 text-sm text-gray-700 data-focus:bg-gray-100 data-focus:outline-hidden"
+                  <Link
+                    onClick={()=>navigate('/profilutilisateur')}
+                    className="block px-4 py-2 text-sm text-base-700 data-focus:bg-base-100 data-focus:outline-hidden"
                   >
                     Paramètres
-                  </a>
+                  </Link>
                 </MenuItem>
                 <MenuItem>
                   <a
-                    className="block px-4 py-2 text-sm text-gray-700 data-focus:bg-gray-100 data-focus:outline-hidden"
+                    className="block px-4 py-2 text-sm text-base-700 data-focus:bg-base-100 data-focus:outline-hidden"
                   >
                     <LogOut />
                   </a>
@@ -202,28 +204,28 @@ export default function AdminLayout() {
               <span className="text-xl font-bold bg-base-800">C'MADA Pro</span></div>
                  </div>
                  <li><NavLink to="/admindashboard"  className={({ isActive }) =>
-          isActive ? 'border-b-2 border-blue-500 text-blue-700' : 'text-gray-500'
+          isActive ? 'border-b-2 border-blue-500 text-blue-700' : 'text-base-500'
         }>Tableau de bord</NavLink></li>
-        <li><NavLink to="/#"  className={({ isActive }) =>
-          isActive ? 'border-b-2 border-blue-500 text-blue-700' : 'text-gray-500'
+        <li><NavLink to="/admincatalogueproduit"  className={({ isActive }) =>
+          isActive ? 'border-b-2 border-blue-500 text-blue-700' : 'text-base-500'
         }>Catalogue</NavLink></li>
-        <li><NavLink to="/#"  className={({ isActive }) =>
-          isActive ? 'border-b-2 border-blue-500 text-blue-700' : 'text-gray-500'
+        <li><NavLink to="/admincommande"  className={({ isActive }) =>
+          isActive ? 'border-b-2 border-blue-500 text-blue-700' : 'text-base-500'
         }>Commande</NavLink></li>
-        <li><NavLink to="/#"  className={({ isActive }) =>
-          isActive ? 'border-b-2 border-blue-500 text-blue-700' : 'text-gray-500'
+        <li><NavLink to="/adminstock"  className={({ isActive }) =>
+          isActive ? 'border-b-2 border-blue-500 text-blue-700' : 'text-base-500'
         }>Stock</NavLink></li>
-        <li><NavLink to="/#"  className={({ isActive }) =>
-          isActive ? 'border-b-2 border-blue-500 text-blue-700' : 'text-gray-500'
+        <li><NavLink to="/admindoc"  className={({ isActive }) =>
+          isActive ? 'border-b-2 border-blue-500 text-blue-700' : 'text-base-500'
         }>Document</NavLink></li>
-        <li><NavLink to="/#"  className={({ isActive }) =>
-          isActive ? 'border-b-2 border-blue-500 text-blue-700' : 'text-gray-500'
+        <li><NavLink to="/adminremise"  className={({ isActive }) =>
+          isActive ? 'border-b-2 border-blue-500 text-blue-700' : 'text-base-500'
         }>Remise</NavLink></li>
-        <li><NavLink to="/#"  className={({ isActive }) =>
-          isActive ? 'border-b-2 border-blue-500 text-blue-700' : 'text-gray-500'
+        <li><NavLink to="/adminproduct"  className={({ isActive }) =>
+          isActive ? 'border-b-2 border-blue-500 text-blue-700' : 'text-base-500'
         }>Produit</NavLink></li>
         <li><NavLink to="/adminuser"  className={({ isActive }) =>
-          isActive ? 'border-b-2 border-blue-500 text-blue-700' : 'text-gray-500'
+          isActive ? 'border-b-2 border-blue-500 text-blue-700' : 'text-base-500'
         }>Utilisateur</NavLink></li>
                      <li>
                  <ThemeSelector></ThemeSelector></li>

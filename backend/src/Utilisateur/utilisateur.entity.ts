@@ -1,4 +1,4 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { BeforeInsert, Column, Entity, PrimaryGeneratedColumn } from "typeorm";
 
 
 @Entity()
@@ -12,7 +12,7 @@ export class Utilisateur {
     @Column()
     nom:string;
 
-    @Column({default:"inactif"})
+    @Column({nullable:true})
     statut:string;
 
     @Column()
@@ -26,4 +26,13 @@ export class Utilisateur {
 
     @Column()
     info_id:number;
+
+    @BeforeInsert()
+    setStatut() {
+      if (this.role === 'fournisseur') {
+        this.statut = 'inactif';
+      } else if (this.role === 'client') {
+        this.statut = 'actif';
+      }
+    }
 }

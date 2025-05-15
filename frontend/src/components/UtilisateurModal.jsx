@@ -14,7 +14,7 @@ export default function UtilisateurModal({ show, onClose, message, onUserAdded }
     mot_de_passe: "",
     confirmation_mot_de_passe: "",
     role: "",
-    statut: "",
+    statut:"",
     info_id: null,
   });
 

@@ -3,8 +3,8 @@ import { API_URL } from "../../config";
 import UtilisateurModal from "../../components/UtilisateurModal";
 import ModifierUtilisateurModal from "../../components/ModifierUtilisateurModal";
 
-export default function AdminUser() {
-  const [utilisateurs, setUtilisateurs] = useState([]);
+export default function AdminRemise() {
+  const [remises, setremises] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [message, setMessage] = useState('');
   const [searchTerm, setSearchTerm] = useState('');
@@ -14,7 +14,7 @@ export default function AdminUser() {
 
 
   useEffect(() => {
-    fetchUtilisateurs();
+    fetchremises();
   }, []);
 
   const handleEditClick = (user) => {
@@ -23,7 +23,7 @@ export default function AdminUser() {
   };
 
   const handleUserUpdated = () => {
-    fetchUtilisateurs();
+    fetchremises();
     setShowModalVisible(false);
   };
 
@@ -46,7 +46,7 @@ const toggleUserStatus = async (userId, newStatus) => {
     }
 
     // Met à jour localement la liste
-    setUtilisateurs((prev) =>
+    setremises((prev) =>
       prev.map((user) =>
         user.id === userId ? { ...user, statut: newStatus } : user
       )
@@ -60,7 +60,7 @@ const toggleUserStatus = async (userId, newStatus) => {
   }
 };
 
-  //SUPRIMER DES UTILISATEURS
+  //SUPRIMER DES remises
   const handleDeleteUser = async (userId) => {
     const confirmDelete = window.confirm("Êtes-vous sûr de vouloir supprimer cet utilisateur ?");
     if (!confirmDelete) return;
@@ -75,7 +75,7 @@ const toggleUserStatus = async (userId, newStatus) => {
       }
   
       // Mettre à jour la liste sans l'utilisateur supprimé
-      setUtilisateurs((prev) => prev.filter((user) => user.id !== userId));
+      setremises((prev) => prev.filter((user) => user.id !== userId));
       setMessage("Utilisateur supprimé avec succès");
   
       // Message temporaire
@@ -87,15 +87,15 @@ const toggleUserStatus = async (userId, newStatus) => {
     }
   };
   
-  // Fonction pour récupérer les utilisateurs
-  const fetchUtilisateurs = async () => {
+  // Fonction pour récupérer les remises
+  const fetchremises = async () => {
     try {
       const response = await fetch(`${API_URL}/utilisateur`);
       if (!response.ok) {
-        throw new Error('Erreur lors du chargement des utilisateurs');
+        throw new Error('Erreur lors du chargement des remises');
       }
       const data = await response.json();
-      setUtilisateurs(data);
+      setremises(data);
     } catch (error) {
       console.error('Erreur:', error);
       setMessage(error.message);
@@ -105,12 +105,12 @@ const toggleUserStatus = async (userId, newStatus) => {
   };
 
   useEffect(() => {
-    fetchUtilisateurs();
+    fetchremises();
   }, []);
 
   // Fonction pour ajouter un nouvel utilisateur
   const handleUserAdded = (newUser) => {
-    setUtilisateurs((prevUtilisateurs) => [...prevUtilisateurs, newUser]);
+    setremises((prevremises) => [...prevremises, newUser]);
     setMessage("Utilisateur ajouté avec succès");
     setTimeout(() => setMessage(''), 5000);
   };
@@ -141,8 +141,8 @@ const toggleUserStatus = async (userId, newStatus) => {
     }
   };
 
-  // Filtrer les utilisateurs en fonction du terme de recherche
-  const filteredUtilisateurs = utilisateurs.filter(user => {
+  // Filtrer les remises en fonction du terme de recherche
+  const filteredremises = remises.filter(user => {
     // Vérifier si 'user' est défini
     if (!user) return false;
   
@@ -160,8 +160,8 @@ const toggleUserStatus = async (userId, newStatus) => {
       <div className="max-w-7xl mx-auto">
         {/* En-tête */}
         <div className="mb-6">
-          <h1 className="text-2xl font-bold">Gestion des Utilisateurs</h1>
-          <p className="text-gray-600">Créez et gérez les utilisateurs de votre plateforme</p>
+          <h1 className="text-2xl font-bold">Gestion des Remises</h1>
+          <p className="text-gray-600">Créez et gérez vos règles de remises personnalisées</p>
         </div>
 
         {/* Carte principale */}
@@ -170,24 +170,10 @@ const toggleUserStatus = async (userId, newStatus) => {
             {/* Barre de recherche et bouton */}
             <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-6">
               <div>
-                <h2 className="text-xl font-semibold">Liste des Utilisateurs</h2>
-                <p className="text-sm text-gray-500">Administration des comptes utilisateurs</p>
+                <h2 className="text-xl font-semibold">Règles de Remise</h2>
+                <p className="text-sm text-gray-500">Configurez des remises automatiques</p>
               </div>
               <div className="flex flex-col sm:flex-row gap-3 w-full md:w-auto">
-                <div className="relative w-full md:w-64">
-                  <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                    <svg className="h-5 w-5 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
-                      <path fillRule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clipRule="evenodd" />
-                    </svg>
-                  </div>
-                  <input
-                    type="text"
-                    placeholder="Rechercher un utilisateur..."
-                    className="input input-bordered w-full pl-10"
-                    value={searchTerm}
-                    onChange={(e) => setSearchTerm(e.target.value)}
-                  />
-                </div>
                 <button 
                   className="btn btn-primary"
                   onClick={() => setShowModal(true)}
@@ -206,9 +192,9 @@ const toggleUserStatus = async (userId, newStatus) => {
                 <thead>
                   <tr>
                     <th className="bg-base-300">NOM</th>
-                    <th className="bg-base-300">EMAIL</th>
-                    <th className="bg-base-300">ROLE</th>
-                    <th className="bg-base-300">SOCIETE</th>
+                    <th className="bg-base-300">TYPE</th>
+                    <th className="bg-base-300">VALEUR</th>
+                    <th className="bg-base-300">APPLICABILITE</th>
                     <th className="bg-base-300">STATUT</th>
                     <th className="bg-base-300">ACTIONS</th>
                   </tr>
@@ -217,11 +203,11 @@ const toggleUserStatus = async (userId, newStatus) => {
                   {loading ? (
                     <tr>
                       <td colSpan="6" className="text-center py-8">
-                        Chargement des utilisateurs...
+                        Chargement des remises...
                       </td>
                     </tr>
-                  ) : filteredUtilisateurs.length > 0 ? (
-                    filteredUtilisateurs.map((user) => (
+                  ) : filteredremises.length > 0 ? (
+                    filteredremises.map((user) => (
                       <tr key={user.id} className="hover:bg-base-200">
                         <td>
                           <div className="font-bold">{user.nom}</div>
@@ -260,7 +246,7 @@ const toggleUserStatus = async (userId, newStatus) => {
                                </button>
                             )}
 
-                              {/* Ajouter le bouton Supprimer pour les utilisateurs de type client ou fournisseur */}
+                              {/* Ajouter le bouton Supprimer pour les remises de type client ou fournisseur */}
                             {(user.role === 'client' || user.role === 'fournisseur') && (
                              <button className="text-red-600 hover:text-red-900"
                              onClick={() => handleDeleteUser(user.id)}>
@@ -274,24 +260,12 @@ const toggleUserStatus = async (userId, newStatus) => {
                   ) : (
                     <tr>
                       <td colSpan="6" className="text-center py-8">
-                        Aucun utilisateur trouvé
+                        Aucun remise trouvé
                       </td>
                     </tr>
                   )}
                 </tbody>
               </table>
-            </div>
-
-            {/* Pagination */}
-            <div className="flex flex-col sm:flex-row justify-between items-center mt-6 pt-4 border-t border-base-300">
-              <div className="text-sm mb-4 sm:mb-0">
-                Affichage de <span className="font-bold">1</span> à <span className="font-bold">{filteredUtilisateurs.length}</span> sur <span className="font-bold">{utilisateurs.length}</span> utilisateurs
-              </div>
-              <div className="btn-group">
-                <button className="btn btn-sm">«</button>
-                <button className="btn btn-sm btn-active">1</button>
-                <button className="btn btn-sm">»</button>
-              </div>
             </div>
           </div>
         </div>

@@ -18,6 +18,13 @@ import FournisseurLayout from "./layouts/fournisseurlayouts";
 import ClientDashboard from "./pages/client/clientdashboard";
 import FournisseurDashboard from "./pages/fournisseur/fournisseurdashboard";
 import AdminProduct from "./pages/admin/adminproduct";
+import ProfilUtilisateur from "./components/ProfilUtilisateur";
+import AdminRemise from "./pages/admin/adminremise";
+import AdminDoc from "./pages/admin/admindoc";
+import AdminStock from "./pages/admin/adminstock";
+import AdminCommande from "./pages/admin/admincommande";
+import CatalogueProduits from "./pages/client/clientcatalogue";
+import AdminCatalogueProduits from "./pages/admin/admincatalogue";
 
 function App() {
   return (
@@ -35,16 +42,22 @@ function App() {
           <Route path="/admindashboard" index element={<PrivateRoute roleAttendu="admin"><AdminDashboard /></PrivateRoute>} />
           <Route path="/adminuser" element={<PrivateRoute roleAttendu="admin"><AdminUser/></PrivateRoute>}/>
           <Route path="/adminproduct" element={<PrivateRoute roleAttendu="admin"><AdminProduct/></PrivateRoute>}/>
+          <Route path="/profilutilisateur" element={<PrivateRoute roleAttendu="admin"><ProfilUtilisateur/></PrivateRoute>}/>
+          <Route path="/admindoc" element={<PrivateRoute roleAttendu="admin"><AdminDoc/></PrivateRoute>}/>
+          <Route path="/adminremise" element={<PrivateRoute roleAttendu="admin"><AdminRemise/></PrivateRoute>}/>
+          <Route path="/adminstock" element={<PrivateRoute roleAttendu="admin"><AdminStock/></PrivateRoute>}/>
+          <Route path="/admincommande" element={<PrivateRoute roleAttendu="admin"><AdminCommande/></PrivateRoute>}/>
+          <Route path="/admincatalogueproduit" element={<PrivateRoute roleAttendu="admin"><AdminCatalogueProduits/></PrivateRoute>}/>
       </Route>
       {/* CLIENT */}
       <Route  element={<ClientLayout />}>
           <Route path="/clientdashboard" index element={<PrivateRoute roleAttendu="client"><ClientDashboard /></PrivateRoute>} />
-          {/* <Route path="/adminuser" element={<PrivateRoute roleAttendu="client"><AdminUser/></PrivateRoute>}/> */}
+          <Route path="/profilclient" element={<PrivateRoute roleAttendu="client"><ProfilUtilisateur/></PrivateRoute>}/>
+          <Route path="/catalogueproduit" element={<PrivateRoute roleAttendu="client"><CatalogueProduits/></PrivateRoute>}/>
       </Route>
       {/* FOURNISSEUR */}
       <Route  element={<FournisseurLayout />}>
           <Route path="/fournisseurdashboard" index element={<PrivateRoute roleAttendu="fournisseur"><FournisseurDashboard /></PrivateRoute>} />
-          {/* <Route path="/adminuser" element={<PrivateRoute roleAttendu="fournisseur"><AdminUser/></PrivateRoute>}/> */}
       </Route>
       
       <Route path="/nonautoriser" element={<NonAutoriser />}/>

@@ -9,6 +9,7 @@ export default function Accueil(){
   <div className="hero-content text-center">
     <div className="max-w-md">
       <h1 className="text-5xl font-bold">Bienvenu sur C'MADA Pro</h1>
+      <img src="Cmada.png" alt="logo" width={100}/>
       <p className="py-6">
         Commencer à vous connecter avec votre compte professionnel.
       </p>

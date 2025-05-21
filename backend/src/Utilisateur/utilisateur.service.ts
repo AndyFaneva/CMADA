@@ -1,4 +1,4 @@
-import { ConflictException, Injectable, NotFoundException, UnauthorizedException } from '@nestjs/common';
+import { BadRequestException, ConflictException, Injectable, NotFoundException, UnauthorizedException } from '@nestjs/common';
 import { Utilisateur } from './utilisateur.entity';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -7,6 +7,7 @@ import * as bcrypt from 'bcryptjs';
 import { MailService } from 'src/mail/mail.service';
 import { JwtService } from '@nestjs/jwt';
 import { UpdateUtilisateurDto } from './dto/update-utilisateur.dto';
+import { UpdatePasswordDto } from './dto/updatePasswordDto';
 
 
 @Injectable()
@@ -28,40 +29,53 @@ export class UtilisateurService {
 
   async create(data: CreateUtilisateurDto): Promise<Utilisateur> {
     console.log('👉 Données reçues pour création :', data);
-    const { mot_de_passe, confirmation_mot_de_passe, email, ...rest } = data;
+    const {
+      mot_de_passe,
+      confirmation_mot_de_passe,
+      email,
+      info_id, // supposé être un nombre (id)
+      ...rest
+    } = data;
   
-    // Vérifie que les deux mots de passe sont identiques
+    // ✅ Vérifie que les mots de passe correspondent
     if (mot_de_passe !== confirmation_mot_de_passe) {
       throw new Error('Les mots de passe ne correspondent pas.');
     }
   
-    // 🔍 Vérifie si un utilisateur avec cet email existe déjà
+    // ✅ Vérifie l'unicité de l'email
     const existingUser = await this.repo.findOne({ where: { email } });
     if (existingUser) {
       console.log("Un utilisateur utilise déjà cette adresse email");
       throw new ConflictException('Un compte avec cet email existe déjà.');
     }
   
+    // ✅ Hash du mot de passe
     console.log('🔐 Hash du mot de passe en cours...');
     const hashedPassword = await bcrypt.hash(mot_de_passe, 10);
     console.log('✅ Mot de passe hashé.');
   
+    // ✅ Prépare l'utilisateur à enregistrer
     const utilisateur = this.repo.create({
       email,
       mot_de_passe: hashedPassword,
       ...rest,
+      // 🔧 transforme l'id reçu en objet info_id
+      info_id: info_id ? { id: info_id } : undefined,
     });
   
     console.log('📦 Utilisateur préparé pour enregistrement :', utilisateur);
+  
+    // ✅ Enregistre en base
     console.log('💾 Enregistrement en base...');
     const savedUser = await this.repo.save(utilisateur);
   
+    // ✅ Envoi de l'email de bienvenue
     console.log('📧 Envoi de l’e-mail de bienvenue à :', savedUser.email);
     try {
       await this.mailService.sendMail(
         savedUser.email,
         'Bienvenue sur C\'MADA Pro 🎉',
-        ` <table width="100%" cellpadding="0" cellspacing="0" border="0" 
+        `<table width="100%" cellpadding="0" cellspacing="0" border="0" 
           style="background-size: cover; background-position: center; padding: 40px; background-color:blue; border-radius:20px">
           <tr>
             <td align="center" style="color: white; font-family: Arial, sans-serif; font-size:24">
@@ -79,6 +93,7 @@ export class UtilisateurService {
   
     return savedUser;
   }
+  
   
 
   async update(id: number, updateUtilisateurDto: UpdateUtilisateurDto): Promise<Utilisateur> {
@@ -98,9 +113,6 @@ export class UtilisateurService {
       throw new Error('Erreur lors de la mise à jour dans le service');
     }
   }
-  
-  
-  
 
     delete(id:number): Promise<any>{
         return this.repo.delete(id);
@@ -169,6 +181,97 @@ export class UtilisateurService {
       user.statut = statut;
       return this.repo.save(user);
     }
+
+    async findById(id: number) {
+      console.log('ID reçu dans findById :', id);
+      console.log('ID dans findById:', id, 'typeof id:', typeof id);
+      return this.repo.findOne({ where: { id } });
+    }
+    
+    async update1(id: number, updateDto: UpdateUtilisateurDto) {
+      const utilisateur = await this.repo.findOneBy({ id });
+      console.log('🔍 Utilisateur trouvé :', utilisateur);
+    
+      if (!utilisateur) {
+        console.log('❌ Utilisateur non trouvé pour ID :', id);
+        throw new NotFoundException('Utilisateur non trouvé');
+      }
+    
+      console.log('📦 Données reçues pour mise à jour :', updateDto);
+      console.log('🛠️ Avant mise à jour :', utilisateur);
+    
+      utilisateur.prenom = updateDto.prenom ?? utilisateur.prenom;
+      utilisateur.nom = updateDto.nom ?? utilisateur.nom;
+      utilisateur.email = updateDto.email ?? utilisateur.email;
+      utilisateur.statut = updateDto.statut ?? utilisateur.statut;
+      utilisateur.role = updateDto.role ?? utilisateur.role;
+    
+      // Ajout de console.log pour suivi du mot de passe
+      console.log('🔐 Tentative de mise à jour du mot de passe...');
+      console.log('Valeur mot_de_passe :', updateDto.mot_de_passe);
+      console.log('Valeur confirmation_mot_de_passe :', updateDto.confirmation_mot_de_passe);
+    
+      if (
+        typeof updateDto.mot_de_passe === 'string' &&
+        typeof updateDto.confirmation_mot_de_passe === 'string' &&
+        updateDto.mot_de_passe.trim().length > 0 &&
+        updateDto.confirmation_mot_de_passe.trim().length > 0
+      ) {
+        if (updateDto.mot_de_passe !== updateDto.confirmation_mot_de_passe) {
+          console.log('⚠️ Les mots de passe ne correspondent pas');
+          throw new BadRequestException('Les mots de passe ne correspondent pas');
+        }
+    
+        console.log('✅ Les mots de passe sont valides et vont être hashés...');
+        const hashed = await bcrypt.hash(updateDto.mot_de_passe, 10);
+        console.log('🔒 Mot de passe hashé :', hashed);
+        utilisateur.mot_de_passe = hashed;
+      } else {
+        console.log('ℹ️ Aucun nouveau mot de passe fourni ou champs vides. Le mot de passe ne sera pas modifié.');
+      }
+    
+      console.log('✅ Après mise à jour des champs :', utilisateur);
+    
+      const saved = await this.repo.save(utilisateur);
+      console.log('💾 Utilisateur enregistré en base :', saved);
+    
+      return saved;
+    }
+    
+
+    async updatePassword(id: number, dto: UpdatePasswordDto) {
+      const utilisateur = await this.repo.findOne({
+        where: { id },
+        select: ['id', 'mot_de_passe'] // 👈 important si mot_de_passe est caché
+      });
+    
+      if (!utilisateur) {
+        throw new NotFoundException('Utilisateur non trouvé');
+      }
+    
+      console.log('Mot de passe actuel fourni :', dto.mot_de_passe_actuel);
+      console.log('Mot de passe en base :', utilisateur.mot_de_passe);
+    
+      if (!dto.mot_de_passe_actuel || !utilisateur.mot_de_passe) {
+        throw new BadRequestException('Les informations du mot de passe sont incomplètes.');
+      }
+    
+      const isMatch = await bcrypt.compare(dto.mot_de_passe_actuel, utilisateur.mot_de_passe);
+      if (!isMatch) {
+        throw new BadRequestException('Mot de passe actuel incorrect');
+      }
+    
+      if (dto.nouveau_mot_de_passe !== dto.confirmation_nouveau_mot_de_passe) {
+        throw new BadRequestException('Les nouveaux mots de passe ne correspondent pas');
+      }
+    
+      const hashed = await bcrypt.hash(dto.nouveau_mot_de_passe, 10);
+      utilisateur.mot_de_passe = hashed;
+    
+      return this.repo.save(utilisateur);
+    }
+    
+    
     
     
 

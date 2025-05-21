@@ -1,26 +1,31 @@
-import { IsEmail, IsNotEmpty, MinLength } from 'class-validator';
+import { IsOptional, IsString } from 'class-validator';
 
 export class UpdateUtilisateurDto {
-  @IsNotEmpty({ message: 'Le prénom est obligatoire.' })
-  prenom: string;
+  @IsOptional()
+  @IsString()
+  prenom?: string;
 
-  @IsNotEmpty({ message: 'Le nom est obligatoire.' })
-  nom: string;
+  @IsOptional()
+  @IsString()
+  nom?: string;
 
-  @IsEmail({}, { message: 'Email invalide' })
-  email: string;
+  @IsOptional()
+  @IsString()
+  email?: string;
 
-  @MinLength(6, { message: 'Le mot de passe doit contenir au moins 6 caractères.' })
-  mot_de_passe: string;
+  @IsOptional()
+  @IsString()
+  statut?: string;
 
-  @IsNotEmpty({ message: 'La confirmation du mot de passe est obligatoire.' })
-  confirmation_mot_de_passe: string;
+  @IsOptional()
+  @IsString()
+  role?: string;
 
-  @IsNotEmpty({ message: 'Le rôle est obligatoire.' })
-  role: string;
+  @IsOptional()
+  @IsString()
+  mot_de_passe?: string;
 
-  @IsNotEmpty({ message: 'Le statut est obligatoire.' })
-  statut: string;
-
-  info_id?: number;
+  @IsOptional()
+  @IsString()
+  confirmation_mot_de_passe?: string;
 }

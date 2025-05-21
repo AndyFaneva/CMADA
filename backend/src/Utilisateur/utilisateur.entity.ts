@@ -1,4 +1,5 @@
-import { BeforeInsert, Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { InformationUtilisateur } from "src/information_utilisateur/information_utilisateur.entity";
+import { BeforeInsert, Column, Entity, JoinColumn, OneToOne, PrimaryGeneratedColumn } from "typeorm";
 
 
 @Entity()
@@ -24,8 +25,10 @@ export class Utilisateur {
     @Column()
     role:string;
 
-    @Column()
-    info_id:number;
+    @OneToOne(() => InformationUtilisateur, { nullable: true , cascade:true})
+    @JoinColumn({ name: 'info_id' })
+    info_id?: InformationUtilisateur; 
+
 
     @BeforeInsert()
     setStatut() {
@@ -35,4 +38,6 @@ export class Utilisateur {
         this.statut = 'actif';
       }
     }
+
+
 }

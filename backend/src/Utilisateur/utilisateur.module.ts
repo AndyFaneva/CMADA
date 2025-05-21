@@ -14,6 +14,7 @@ import { AuthController } from 'src/auth/auth.controller';
       signOptions: { expiresIn: '1h' },
     }),
     TypeOrmModule.forFeature([Utilisateur]), MailModule],
+    exports:[TypeOrmModule],
   providers: [UtilisateurService],
   controllers: [AuthController,UtilisateurController]
 })

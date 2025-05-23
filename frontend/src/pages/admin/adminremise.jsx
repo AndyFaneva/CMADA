@@ -90,7 +90,7 @@ const toggleUserStatus = async (userId, newStatus) => {
   // Fonction pour récupérer les remises
   const fetchremises = async () => {
     try {
-      const response = await fetch(`${API_URL}/utilisateur`);
+      // const response = await fetch(`${API_URL}/utilisateur`);
       if (!response.ok) {
         throw new Error('Erreur lors du chargement des remises');
       }

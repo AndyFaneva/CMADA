@@ -90,7 +90,7 @@ const toggleUserStatus = async (userId, newStatus) => {
   // Fonction pour récupérer les utilisateurs
   const fetchUtilisateurs = async () => {
     try {
-      const response = await fetch(`${API_URL}/utilisateur`);
+      // const response = await fetch(`${API_URL}/utilisateur`);
       if (!response.ok) {
         throw new Error('Erreur lors du chargement des utilisateurs');
       }
@@ -276,7 +276,7 @@ const toggleUserStatus = async (userId, newStatus) => {
                   ) : (
                     <tr>
                       <td colSpan="6" className="text-center py-8">
-                        Aucun utilisateur trouvé
+                        Aucun document trouvé
                       </td>
                     </tr>
                   )}

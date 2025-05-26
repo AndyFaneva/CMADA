@@ -51,11 +51,6 @@ export class InformationUtilisateurService {
     return savedInfo;
   }
   
-  
-  
-  
-  
-  
   async findByUser(userId: number): Promise<InformationUtilisateur> {
     const info = await this.informationRepo.findOne({
       where: { utilisateur: { id: userId } },

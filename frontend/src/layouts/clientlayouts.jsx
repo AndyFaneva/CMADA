@@ -28,16 +28,16 @@ export default function ClientLayout() {
                  <li><NavLink to="/clientdashboard"  className={({ isActive }) =>
           isActive ? 'border-b-2 border-blue-500 text-blue-700' : 'text-gray-500'
         }>Tableau de bord</NavLink></li>
-        <li><NavLink to="/catalogueproduit"  className={({ isActive }) =>
+        <li><NavLink to="/ClientCatalogue"  className={({ isActive }) =>
           isActive ? 'border-b-2 border-blue-500 text-blue-700' : 'text-gray-500'
         }>Catalogue</NavLink></li>
-        <li><NavLink to="/"  className={({ isActive }) =>
+        <li><NavLink to="/clientcommande"  className={({ isActive }) =>
           isActive ? 'border-b-2 border-blue-500 text-blue-700' : 'text-gray-500'
         }>Commande</NavLink></li>
-        <li><NavLink to="/"  className={({ isActive }) =>
+        <li><NavLink to="/clientdocument"  className={({ isActive }) =>
           isActive ? 'border-b-2 border-blue-500 text-blue-700' : 'text-gray-500'
         }>Document</NavLink></li>
-        <li><NavLink to="/"  className={({ isActive }) =>
+        <li><NavLink to="/clientremise"  className={({ isActive }) =>
           isActive ? 'border-b-2 border-blue-500 text-blue-700' : 'text-gray-500'
         }>Remise</NavLink></li>
                    </ul>
@@ -197,16 +197,16 @@ export default function ClientLayout() {
                  <li><NavLink to="/clientdashboard"  className={({ isActive }) =>
           isActive ? 'border-b-2 border-blue-500 text-blue-700' : 'text-base-500'
         }>Tableau de bord</NavLink></li>
-        <li><NavLink to="/catalogueproduit"  className={({ isActive }) =>
+        <li><NavLink to="/ClientCatalogue"  className={({ isActive }) =>
           isActive ? 'border-b-2 border-blue-500 text-blue-700' : 'text-base-500'
         }>Catalogue</NavLink></li>
-        <li><NavLink to="/"  className={({ isActive }) =>
+        <li><NavLink to="/clientcommande"  className={({ isActive }) =>
           isActive ? 'border-b-2 border-blue-500 text-blue-700' : 'text-base-500'
         }>Commande</NavLink></li>
-        <li><NavLink to="/"  className={({ isActive }) =>
+        <li><NavLink to="/clientdocument"  className={({ isActive }) =>
           isActive ? 'border-b-2 border-blue-500 text-blue-700' : 'text-base-500'
         }>Document</NavLink></li>
-        <li><NavLink to="/"  className={({ isActive }) =>
+        <li><NavLink to="/clientremise"  className={({ isActive }) =>
           isActive ? 'border-b-2 border-blue-500 text-blue-700' : 'text-base-500'
         }>Remise</NavLink></li>
                      <li>

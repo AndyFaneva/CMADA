@@ -1,6 +1,6 @@
 import React from "react";
 
-const ClientCatalogue = () => {
+const FournisseurCatalogue = () => {
   const filterProducts = (filter) => {
     console.log("Filtrer par:", filter);
     // Implémentation ici
@@ -213,4 +213,4 @@ const ClientCatalogue = () => {
   );
 };
 
-export default ClientCatalogue;
+export default FournisseurCatalogue;

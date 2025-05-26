@@ -28,22 +28,22 @@ export default function FournisseurLayout() {
                  <li><NavLink to="/fournisseurdashboard"  className={({ isActive }) =>
           isActive ? 'border-b-2 border-blue-500 text-blue-700' : 'text-gray-500'
         }>Tableau de bord</NavLink></li>
-        <li><NavLink to="/"  className={({ isActive }) =>
+        <li><NavLink to="/fournisseurcatalogue"  className={({ isActive }) =>
           isActive ? 'border-b-2 border-blue-500 text-blue-700' : 'text-gray-500'
         }>Catalogue</NavLink></li>
-        <li><NavLink to="/"  className={({ isActive }) =>
+        <li><NavLink to="/fournisseurcommande"  className={({ isActive }) =>
           isActive ? 'border-b-2 border-blue-500 text-blue-700' : 'text-gray-500'
         }>Commande</NavLink></li>
-        <li><NavLink to="/"  className={({ isActive }) =>
+        <li><NavLink to="/fournisseurstock"  className={({ isActive }) =>
           isActive ? 'border-b-2 border-blue-500 text-blue-700' : 'text-gray-500'
         }>Stock</NavLink></li>
-        <li><NavLink to="/"  className={({ isActive }) =>
+        <li><NavLink to="/fournisseurdocument"  className={({ isActive }) =>
           isActive ? 'border-b-2 border-blue-500 text-blue-700' : 'text-gray-500'
         }>Document</NavLink></li>
-        <li><NavLink to="/"  className={({ isActive }) =>
+        <li><NavLink to="/fournisseurremise"  className={({ isActive }) =>
           isActive ? 'border-b-2 border-blue-500 text-blue-700' : 'text-gray-500'
         }>Remise</NavLink></li>
-        <li><NavLink to="/"  className={({ isActive }) =>
+        <li><NavLink to="/fournisseurproduct"  className={({ isActive }) =>
           isActive ? 'border-b-2 border-blue-500 text-blue-700' : 'text-gray-500'
         }>Produit</NavLink></li>
                    </ul>
@@ -98,7 +98,7 @@ export default function FournisseurLayout() {
               >
                 <MenuItem>
                   <a
-                   navigate="/"
+                   navigate="/profilfournisseur"
                     className="block px-4 py-2 text-sm text-gray-700 data-focus:bg-base-100 data-focus:outline-hidden"
                   >
                     Votre profile
@@ -159,7 +159,7 @@ export default function FournisseurLayout() {
                 className="fixed right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-base-100 py-1 shadow-lg ring-1 ring-black/5 transition focus:outline-hidden data-closed:scale-95 data-closed:transform data-closed:opacity-0 data-enter:duration-100 data-enter:ease-out data-leave:duration-75 data-leave:ease-in"
               >
                 <MenuItem>
-                  <Link to="/"
+                  <Link to="/profilfournisseur"
                     className="block px-4 py-2 text-sm text-base-700 data-focus:bg-base-100 data-focus:outline-hidden"
                   >
                     Votre profile
@@ -203,22 +203,22 @@ export default function FournisseurLayout() {
                  <li><NavLink to="/fournisseurdashboard"  className={({ isActive }) =>
           isActive ? 'border-b-2 border-blue-500 text-blue-700' : 'text-base-500'
         }>Tableau de bord</NavLink></li>
-        <li><NavLink to="/"  className={({ isActive }) =>
+        <li><NavLink to="/fournisseurcatalogue"  className={({ isActive }) =>
           isActive ? 'border-b-2 border-blue-500 text-blue-700' : 'text-base-500'
         }>Catalogue</NavLink></li>
-        <li><NavLink to="/"  className={({ isActive }) =>
+        <li><NavLink to="/fournisseurcommande"  className={({ isActive }) =>
           isActive ? 'border-b-2 border-blue-500 text-blue-700' : 'text-base-500'
         }>Commande</NavLink></li>
-        <li><NavLink to="/"  className={({ isActive }) =>
+        <li><NavLink to="/fournisseurstock"  className={({ isActive }) =>
           isActive ? 'border-b-2 border-blue-500 text-blue-700' : 'text-base-500'
         }>Stock</NavLink></li>
-        <li><NavLink to="/"  className={({ isActive }) =>
+        <li><NavLink to="/fournisseurdocument"  className={({ isActive }) =>
           isActive ? 'border-b-2 border-blue-500 text-blue-700' : 'text-base-500'
         }>Document</NavLink></li>
-        <li><NavLink to="/"  className={({ isActive }) =>
+        <li><NavLink to="/fournisseurremise"  className={({ isActive }) =>
           isActive ? 'border-b-2 border-blue-500 text-blue-700' : 'text-base-500'
         }>Remise</NavLink></li>
-        <li><NavLink to="/"  className={({ isActive }) =>
+        <li><NavLink to="/fournisseurproduct"  className={({ isActive }) =>
           isActive ? 'border-b-2 border-blue-500 text-blue-700' : 'text-base-500'
         }>Produit</NavLink></li>
                      <li>

@@ -25,6 +25,15 @@ import AdminStock from "./pages/admin/adminstock";
 import AdminCommande from "./pages/admin/admincommande";
 import CatalogueProduits from "./pages/client/clientcatalogue";
 import AdminCatalogueProduits from "./pages/admin/admincatalogue";
+import FournisseurCatalogue from "./pages/fournisseur/fournisseurcatalogue";
+import FournisseurCommande from "./pages/fournisseur/fournisseurcommande";
+import FournisseurStock from "./pages/fournisseur/fournisseurstock";
+import FournisseurDocument from "./pages/fournisseur/fournisseurdocument";
+import FournisseurRemise from "./pages/fournisseur/fournisseurremise";
+import FournisseurProduct from "./pages/fournisseur/fournisseurproduit";
+import ClientCommande from "./pages/client/clientcommande";
+import ClientDocument from "./pages/client/clientdocument";
+import ClientRemise from "./pages/client/clientremise";
 
 function App() {
   return (
@@ -53,11 +62,21 @@ function App() {
       <Route  element={<ClientLayout />}>
           <Route path="/clientdashboard" index element={<PrivateRoute roleAttendu="client"><ClientDashboard /></PrivateRoute>} />
           <Route path="/profilclient" element={<PrivateRoute roleAttendu="client"><ProfilUtilisateur/></PrivateRoute>}/>
-          <Route path="/catalogueproduit" element={<PrivateRoute roleAttendu="client"><CatalogueProduits/></PrivateRoute>}/>
+          <Route path="/clientcatalogue" element={<PrivateRoute roleAttendu="client"><CatalogueProduits/></PrivateRoute>}/>
+           <Route path="/clientcommande" element={<PrivateRoute roleAttendu="client"><ClientCommande/></PrivateRoute>}/>
+           <Route path="/clientdocument" element={<PrivateRoute roleAttendu="client"><ClientDocument/></PrivateRoute>}/>
+           <Route path="/clientremise" element={<PrivateRoute roleAttendu="client"><ClientRemise/></PrivateRoute>}/>
       </Route>
       {/* FOURNISSEUR */}
       <Route  element={<FournisseurLayout />}>
           <Route path="/fournisseurdashboard" index element={<PrivateRoute roleAttendu="fournisseur"><FournisseurDashboard /></PrivateRoute>} />
+          <Route path="/profilfournisseur" element={<PrivateRoute roleAttendu="fournisseur"><ProfilUtilisateur/></PrivateRoute>}/>
+          <Route path="/fournisseurcommande" element={<PrivateRoute roleAttendu="fournisseur"><FournisseurCommande/></PrivateRoute>}/>
+          <Route path="/fournisseurcatalogue" element={<PrivateRoute roleAttendu="fournisseur"><FournisseurCatalogue/></PrivateRoute>}/>
+          <Route path="/fournisseurstock" element={<PrivateRoute roleAttendu="fournisseur"><FournisseurStock/></PrivateRoute>}/>
+           <Route path="/fournisseurdocument" element={<PrivateRoute roleAttendu="fournisseur"><FournisseurDocument/></PrivateRoute>}/>
+           <Route path="/fournisseurremise" element={<PrivateRoute roleAttendu="fournisseur"><FournisseurRemise/></PrivateRoute>}/>
+           <Route path="/fournisseurproduct" element={<PrivateRoute roleAttendu="fournisseur"><FournisseurProduct/></PrivateRoute>}/>
       </Route>
       
       <Route path="/nonautoriser" element={<NonAutoriser />}/>

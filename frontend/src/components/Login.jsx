@@ -34,11 +34,11 @@ export default function Login(){
         setTimeout(() => {
           if (utilisateur.statut === 'actif') {
             if (utilisateur.role === 'admin') {
-              navigate('/admindashboard');
+              navigate('/admin/dashboard');
             } else if (utilisateur.role === 'fournisseur') {
-              navigate('/fournisseurdashboard');
+              navigate('/fournisseur/dashboard');
             } else if (utilisateur.role === 'client') {
-              navigate('/clientdashboard');
+              navigate('/client/dashboard');
             } else {
               setError("Rôle non autorisé");
             }

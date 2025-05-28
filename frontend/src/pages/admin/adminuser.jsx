@@ -233,7 +233,7 @@ const toggleUserStatus = async (userId, newStatus) => {
                             {user.role}
                           </span>
                         </td>
-                        <td>{user.societe || '-'}</td>
+                        <td>{user.entreprise || '-'}</td>
                         <td>
                           <span className={getBadgeStatut(user.statut)}>
                             {user.statut}

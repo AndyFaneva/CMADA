@@ -1,25 +1,49 @@
-import { Body, Controller, Delete, Get, Param, Patch, Post, Request,UseGuards,UnauthorizedException, BadRequestException, Put, Req } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Patch, Post, Request,UseGuards,UnauthorizedException, BadRequestException, Put, Req, UseInterceptors, UploadedFile, ParseFilePipe, MaxFileSizeValidator, FileTypeValidator } from '@nestjs/common';
 import { UtilisateurService } from './utilisateur.service';
 import { CreateUtilisateurDto } from './dto/create-utilisateur.dto';
 import { Utilisateur } from './utilisateur.entity';
 import { UpdateUtilisateurDto } from './dto/update-utilisateur.dto';
 import { AuthGuard } from '@nestjs/passport';
 import { UpdatePasswordDto } from './dto/updatePasswordDto';
+import { FileInterceptor } from '@nestjs/platform-express';
+import { Express } from 'express';
 
 
 @Controller('Utilisateur')
 export class UtilisateurController {
     constructor(private readonly service: UtilisateurService){}
 
+    @Put(':id/photo')
+    @UseInterceptors(FileInterceptor('image_profil'))
+    async updatePhotoProfil(
+        @Param('id') id: string,
+        @UploadedFile(
+            new ParseFilePipe({
+                validators: [
+                    new MaxFileSizeValidator({ maxSize: 1024 * 1024 * 5 }), // 5MB
+                    new FileTypeValidator({ fileType: 'image/(jpeg|png|gif)' }),
+                ],
+                fileIsRequired: false,
+            }),
+        )
+        image: Express.Multer.File,
+        @Body() updateUtilisateurDto: UpdateUtilisateurDto,
+    ) {
+        try {
+            console.log('Mise à jour photo profil pour ID:', id);
+            console.log('Fichier image reçu:', image?.originalname);
+            
+            return await this.service.updatePhotoProfil(+id, image, updateUtilisateurDto);
+        } catch (error) {
+            console.error('Erreur lors de la mise à jour de la photo:', error);
+            throw new BadRequestException('Échec de la mise à jour de la photo de profil');
+        }
+    }
+
     @Get()
     findAll(){
         return this.service.findAll();
     }
-
-    // @Get(':id')
-    // findOne(@Param('id')id:number){
-    //     return this.service.findOne(id);
-    // }
 
     @Post()
     create(@Body() data: CreateUtilisateurDto): Promise<Utilisateur> {

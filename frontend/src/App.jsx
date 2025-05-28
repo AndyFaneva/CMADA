@@ -48,35 +48,35 @@ function App() {
       </Route>
       {/* ADMIN */}
       <Route  element={<AdminLayout />}>
-          <Route path="/admindashboard" index element={<PrivateRoute roleAttendu="admin"><AdminDashboard /></PrivateRoute>} />
-          <Route path="/adminuser" element={<PrivateRoute roleAttendu="admin"><AdminUser/></PrivateRoute>}/>
-          <Route path="/adminproduct" element={<PrivateRoute roleAttendu="admin"><AdminProduct/></PrivateRoute>}/>
-          <Route path="/profilutilisateur" element={<PrivateRoute roleAttendu="admin"><ProfilUtilisateur/></PrivateRoute>}/>
-          <Route path="/admindoc" element={<PrivateRoute roleAttendu="admin"><AdminDoc/></PrivateRoute>}/>
-          <Route path="/adminremise" element={<PrivateRoute roleAttendu="admin"><AdminRemise/></PrivateRoute>}/>
-          <Route path="/adminstock" element={<PrivateRoute roleAttendu="admin"><AdminStock/></PrivateRoute>}/>
-          <Route path="/admincommande" element={<PrivateRoute roleAttendu="admin"><AdminCommande/></PrivateRoute>}/>
-          <Route path="/admincatalogueproduit" element={<PrivateRoute roleAttendu="admin"><AdminCatalogueProduits/></PrivateRoute>}/>
+          <Route path="/admin/dashboard" index element={<PrivateRoute roleAttendu="admin"><AdminDashboard /></PrivateRoute>} />
+          <Route path="/admin/user" element={<PrivateRoute roleAttendu="admin"><AdminUser/></PrivateRoute>}/>
+          <Route path="/admin/product" element={<PrivateRoute roleAttendu="admin"><AdminProduct/></PrivateRoute>}/>
+          <Route path="/profil/admin" element={<PrivateRoute roleAttendu="admin"><ProfilUtilisateur/></PrivateRoute>}/>
+          <Route path="/admin/doc" element={<PrivateRoute roleAttendu="admin"><AdminDoc/></PrivateRoute>}/>
+          <Route path="/admin/remise" element={<PrivateRoute roleAttendu="admin"><AdminRemise/></PrivateRoute>}/>
+          <Route path="/admin/stock" element={<PrivateRoute roleAttendu="admin"><AdminStock/></PrivateRoute>}/>
+          <Route path="/admin/commande" element={<PrivateRoute roleAttendu="admin"><AdminCommande/></PrivateRoute>}/>
+          <Route path="/admin/catalogueproduit" element={<PrivateRoute roleAttendu="admin"><AdminCatalogueProduits/></PrivateRoute>}/>
       </Route>
       {/* CLIENT */}
       <Route  element={<ClientLayout />}>
-          <Route path="/clientdashboard" index element={<PrivateRoute roleAttendu="client"><ClientDashboard /></PrivateRoute>} />
-          <Route path="/profilclient" element={<PrivateRoute roleAttendu="client"><ProfilUtilisateur/></PrivateRoute>}/>
-          <Route path="/clientcatalogue" element={<PrivateRoute roleAttendu="client"><CatalogueProduits/></PrivateRoute>}/>
-           <Route path="/clientcommande" element={<PrivateRoute roleAttendu="client"><ClientCommande/></PrivateRoute>}/>
-           <Route path="/clientdocument" element={<PrivateRoute roleAttendu="client"><ClientDocument/></PrivateRoute>}/>
-           <Route path="/clientremise" element={<PrivateRoute roleAttendu="client"><ClientRemise/></PrivateRoute>}/>
+          <Route path="/client/dashboard" index element={<PrivateRoute roleAttendu="client"><ClientDashboard /></PrivateRoute>} />
+          <Route path="/profil/client" element={<PrivateRoute roleAttendu="client"><ProfilUtilisateur/></PrivateRoute>}/>
+          <Route path="/client/catalogue" element={<PrivateRoute roleAttendu="client"><CatalogueProduits/></PrivateRoute>}/>
+           <Route path="/client/commande" element={<PrivateRoute roleAttendu="client"><ClientCommande/></PrivateRoute>}/>
+           <Route path="/client/document" element={<PrivateRoute roleAttendu="client"><ClientDocument/></PrivateRoute>}/>
+           <Route path="/client/remise" element={<PrivateRoute roleAttendu="client"><ClientRemise/></PrivateRoute>}/>
       </Route>
       {/* FOURNISSEUR */}
       <Route  element={<FournisseurLayout />}>
-          <Route path="/fournisseurdashboard" index element={<PrivateRoute roleAttendu="fournisseur"><FournisseurDashboard /></PrivateRoute>} />
-          <Route path="/profilfournisseur" element={<PrivateRoute roleAttendu="fournisseur"><ProfilUtilisateur/></PrivateRoute>}/>
-          <Route path="/fournisseurcommande" element={<PrivateRoute roleAttendu="fournisseur"><FournisseurCommande/></PrivateRoute>}/>
-          <Route path="/fournisseurcatalogue" element={<PrivateRoute roleAttendu="fournisseur"><FournisseurCatalogue/></PrivateRoute>}/>
-          <Route path="/fournisseurstock" element={<PrivateRoute roleAttendu="fournisseur"><FournisseurStock/></PrivateRoute>}/>
-           <Route path="/fournisseurdocument" element={<PrivateRoute roleAttendu="fournisseur"><FournisseurDocument/></PrivateRoute>}/>
-           <Route path="/fournisseurremise" element={<PrivateRoute roleAttendu="fournisseur"><FournisseurRemise/></PrivateRoute>}/>
-           <Route path="/fournisseurproduct" element={<PrivateRoute roleAttendu="fournisseur"><FournisseurProduct/></PrivateRoute>}/>
+          <Route path="/fournisseur/dashboard" index element={<PrivateRoute roleAttendu="fournisseur"><FournisseurDashboard /></PrivateRoute>} />
+          <Route path="/profil/fournisseur" element={<PrivateRoute roleAttendu="fournisseur"><ProfilUtilisateur/></PrivateRoute>}/>
+          <Route path="/fournisseur/commande" element={<PrivateRoute roleAttendu="fournisseur"><FournisseurCommande/></PrivateRoute>}/>
+          <Route path="/fournisseur/catalogue" element={<PrivateRoute roleAttendu="fournisseur"><FournisseurCatalogue/></PrivateRoute>}/>
+          <Route path="/fournisseur/stock" element={<PrivateRoute roleAttendu="fournisseur"><FournisseurStock/></PrivateRoute>}/>
+           <Route path="/fournisseur/document" element={<PrivateRoute roleAttendu="fournisseur"><FournisseurDocument/></PrivateRoute>}/>
+           <Route path="/fournisseur/remise" element={<PrivateRoute roleAttendu="fournisseur"><FournisseurRemise/></PrivateRoute>}/>
+           <Route path="/fournisseur/product" element={<PrivateRoute roleAttendu="fournisseur"><FournisseurProduct/></PrivateRoute>}/>
       </Route>
       
       <Route path="/nonautoriser" element={<NonAutoriser />}/>

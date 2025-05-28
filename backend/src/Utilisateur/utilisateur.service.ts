@@ -8,10 +8,54 @@ import { MailService } from 'src/mail/mail.service';
 import { JwtService } from '@nestjs/jwt';
 import { UpdateUtilisateurDto } from './dto/update-utilisateur.dto';
 import { UpdatePasswordDto } from './dto/updatePasswordDto';
-
+import * as fs from 'fs';
+import * as path from 'path';
 
 @Injectable()
 export class UtilisateurService {
+ async updatePhotoProfil(
+    id: number,
+    image: Express.Multer.File,
+    updateData: UpdateUtilisateurDto
+): Promise<Utilisateur> {
+    const user = await this.repo.findOne({ where: { id } });
+    
+    if (!user) {
+        throw new Error('Utilisateur non trouvé');
+    }
+
+    // Mise à jour des autres champs si présents
+    if (updateData.nom) user.nom = updateData.nom;
+    if (updateData.prenom) user.prenom = updateData.prenom;
+    // ... autres champs à mettre à jour ...
+
+    // Gestion de l'image
+    if (image) {
+        // Supprimer l'ancienne image si elle existe
+        if (user.image_profil) {
+            const oldImagePath = path.join(__dirname, '..', '..', 'uploads', user.image_profil);
+            if (fs.existsSync(oldImagePath)) {
+                fs.unlinkSync(oldImagePath);
+            }
+        }
+
+        // Sauvegarder la nouvelle image
+        const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1e9);
+        const ext = path.extname(image.originalname);
+        const filename = `profile-${id}-${uniqueSuffix}${ext}`;
+        const uploadPath = path.join(__dirname, '..', '..', 'uploads', filename);
+
+        // Créer le dossier s'il n'existe pas
+        if (!fs.existsSync(path.dirname(uploadPath))) {
+            fs.mkdirSync(path.dirname(uploadPath), { recursive: true });
+        }
+
+        fs.writeFileSync(uploadPath, image.buffer);
+        user.image_profil = filename;
+    }
+
+    return this.repo.save(user);
+}
     constructor(
         @InjectRepository(Utilisateur)
         private readonly repo: Repository<Utilisateur>,
@@ -33,7 +77,6 @@ export class UtilisateurService {
       mot_de_passe,
       confirmation_mot_de_passe,
       email,
-      info_id, // supposé être un nombre (id)
       ...rest
     } = data;
   
@@ -55,13 +98,12 @@ export class UtilisateurService {
     console.log('✅ Mot de passe hashé.');
   
     // ✅ Prépare l'utilisateur à enregistrer
-    const utilisateur = this.repo.create({
-      email,
-      mot_de_passe: hashedPassword,
-      ...rest,
-      // 🔧 transforme l'id reçu en objet info_id
-      info_id: info_id ? { id: info_id } : undefined,
-    });
+  const utilisateur = this.repo.create({
+    email,
+    mot_de_passe: hashedPassword,
+    ...rest,
+
+  });
   
     console.log('📦 Utilisateur préparé pour enregistrement :', utilisateur);
   
@@ -205,6 +247,9 @@ export class UtilisateurService {
       utilisateur.email = updateDto.email ?? utilisateur.email;
       utilisateur.statut = updateDto.statut ?? utilisateur.statut;
       utilisateur.role = updateDto.role ?? utilisateur.role;
+      utilisateur.telephone = updateDto.telephone ?? utilisateur.telephone;
+      utilisateur.entreprise = updateDto.entreprise ?? utilisateur.entreprise;
+      utilisateur.poste = updateDto.poste ?? utilisateur.poste;
     
       // Ajout de console.log pour suivi du mot de passe
       console.log('🔐 Tentative de mise à jour du mot de passe...');
@@ -271,7 +316,13 @@ export class UtilisateurService {
       return this.repo.save(utilisateur);
     }
     
-    
+async findOne1(id: number): Promise<Utilisateur> {
+  const user = await this.repo.findOneBy({ id });
+  if (!user) {
+    throw new NotFoundException('Utilisateur non trouvé');
+  }
+  return user;
+}
     
     
 

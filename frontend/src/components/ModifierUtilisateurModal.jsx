@@ -13,7 +13,7 @@ export default function ModifierUtilisateurModal({ show, onClose, utilisateur, o
     confirmation_mot_de_passe: "",
     role: "",
     statut: "",
-    info_id: null,
+    entreprise:"",
   });
 
   useEffect(() => {
@@ -26,6 +26,7 @@ export default function ModifierUtilisateurModal({ show, onClose, utilisateur, o
         confirmation_mot_de_passe: "",
         role: utilisateur.role || "",
         statut: utilisateur.statut || "",
+           entreprise: utilisateur.entreprise || "",
       });
     }
   }, [utilisateur]);
@@ -129,20 +130,20 @@ export default function ModifierUtilisateurModal({ show, onClose, utilisateur, o
 
             <div className="form-control md:col-span-2">
               <label className="label">Société (optionnel)</label>
-              <input name="societe" className="input input-bordered" />
+              <input name="entreprise" onChange={handleChange} value={form.entreprise} className="input input-bordered" />
             </div>
 
-            <div className="form-control">
+            {/* <div className="form-control">
               <label className="label">Nouveau mot de passe</label>
-              <input type="password" name="mot_de_passe" onChange={handleChange} value={form.mot_de_passe} className={`input input-bordered ${errors.mot_de_passe ? 'input-error' : ''}`} />
+              <input type="password" name="mot_de_passe" onChange={handleChange} className={`input input-bordered ${errors.mot_de_passe ? 'input-error' : ''}`} />
               {errors.mot_de_passe && <span className="text-error">{errors.mot_de_passe}</span>}
             </div>
 
             <div className="form-control">
               <label className="label">Confirmation</label>
-              <input type="password" name="confirmation_mot_de_passe" onChange={handleChange} value={form.confirmation_mot_de_passe} className={`input input-bordered ${errors.confirmation_mot_de_passe ? 'input-error' : ''}`} />
+              <input type="password" name="confirmation_mot_de_passe" onChange={handleChange} className={`input input-bordered ${errors.confirmation_mot_de_passe ? 'input-error' : ''}`} />
               {errors.confirmation_mot_de_passe && <span className="text-error">{errors.confirmation_mot_de_passe}</span>}
-            </div>
+            </div> */}
           </div>
 
           {errors.api && (

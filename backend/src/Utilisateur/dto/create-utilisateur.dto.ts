@@ -1,4 +1,4 @@
-import { IsEmail, IsNotEmpty, MinLength } from 'class-validator';
+import { IsEmail, IsNotEmpty, IsOptional, MinLength } from 'class-validator';
 
 export class CreateUtilisateurDto {
   @IsNotEmpty({ message: 'Le prénom est obligatoire.' })
@@ -22,5 +22,12 @@ export class CreateUtilisateurDto {
   @IsNotEmpty({ message: 'Le statut est obligatoire.' })
   statut: string;
 
-  info_id?: number;
+   @IsOptional()
+  telephone?: string;
+
+   @IsOptional()
+  entreprise?: string;
+
+   @IsOptional()
+  poste?: string;
 }

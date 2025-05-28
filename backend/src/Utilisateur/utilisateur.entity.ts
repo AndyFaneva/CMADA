@@ -1,6 +1,4 @@
-import { InformationUtilisateur } from "src/information_utilisateur/information_utilisateur.entity";
-import { BeforeInsert, Column, Entity, JoinColumn, OneToOne, PrimaryGeneratedColumn } from "typeorm";
-
+import { AfterLoad, BeforeInsert, Column, Entity, JoinColumn, OneToOne, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity()
 export class Utilisateur {
@@ -25,10 +23,17 @@ export class Utilisateur {
     @Column()
     role:string;
 
-    @OneToOne(() => InformationUtilisateur, { nullable: true , cascade:true})
-    @JoinColumn({ name: 'info_id' })
-    info_id?: InformationUtilisateur; 
+    @Column()
+    telephone:string;
 
+    @Column()
+    entreprise:string;
+
+    @Column()
+    poste:string;
+
+     @Column({ nullable: true })
+  image_profil: string;
 
     @BeforeInsert()
     setStatut() {
